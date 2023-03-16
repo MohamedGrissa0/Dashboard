@@ -5,6 +5,9 @@ import {Link} from "react-router-dom"
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import RateReviewIcon from '@mui/icons-material/RateReview';
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import PersonIcon from '@mui/icons-material/Person';
 export default function Navbar() {
     const [toggleMenu,setToggleMenu]=useState(false)
     const [toggleSetting,setToggleSetting]=useState(false)
@@ -20,10 +23,9 @@ export default function Navbar() {
                <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
             </svg>
          </button>
-        <a href="/" class="flex ml-2 md:mr-24">
-          <img src="logoImage" class="h-8 mr-3" alt="FlowBite Logo" />
-          <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Reviewhub</span>
-        </a>
+        <Link to="/" class="flex ml-2 md:mr-24">
+            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Reviewhub</span>
+        </Link>
       </div>
       <div class="flex  relative items-center">
           <div class="flex items-center ml-3">
@@ -64,38 +66,38 @@ export default function Navbar() {
    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
       <ul class="space-y-2">
          <li>
-            <a href="/" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Link to="/" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
             
                    <DashboardIcon class="w-6 h-6hover:text-white" />
                <span class="ml-3">Dashboard</span>
-            </a>
+            </Link>
          </li>
          <li>
-            <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Link to="/form" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
              
              
             <InsertDriveFileIcon />
                 <span class="flex-1 ml-3 whitespace-nowrap">Form</span>
-             </a>
+             </Link>
          </li>
          <li>
-            <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-               <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"></path><path d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path></svg>
-               <span class="flex-1 ml-3 whitespace-nowrap">Carts</span>
-               <span class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
-            </a>
+            <Link to="/places" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <ApartmentIcon />
+                <span class="flex-1 ml-3 whitespace-nowrap">All places</span>
+                </Link>
          </li>
          <li>
-            <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-               <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd"></path></svg>
-               <span class="flex-1 ml-3 whitespace-nowrap">All places</span>
-            </a>
+            <Link to="/reviews" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <RateReviewIcon />
+                 <span class="flex-1 ml-3 whitespace-nowrap">Reviews</span>
+            </Link>
          </li>
          <li>
-            <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-               <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+            <Link to="/users" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <PersonIcon />
+              
                <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
-            </a>
+            </Link>
          </li>
        
        
