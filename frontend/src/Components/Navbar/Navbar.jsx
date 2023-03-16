@@ -7,8 +7,7 @@ import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import ApartmentIcon from '@mui/icons-material/Apartment';
-import PersonIcon from '@mui/icons-material/Person';
-export default function Navbar() {
+import GroupIcon from '@mui/icons-material/Group';export default function Navbar() {
     const [toggleMenu,setToggleMenu]=useState(false)
     const [toggleSetting,setToggleSetting]=useState(false)
   return (
@@ -94,7 +93,7 @@ export default function Navbar() {
          </li>
          <li>
             <Link to="/users" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-              <PersonIcon />
+              <GroupIcon />
               
                <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
             </Link>
