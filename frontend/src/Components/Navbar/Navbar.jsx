@@ -30,11 +30,11 @@ export default function Navbar() {
       <div class="flex  relative items-center">
           <div class="flex items-center ml-3">
             <div>
-            <button onClick={()=>{setToggleSetting(!toggleSetting)}} type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-2 focus:ring-gray-200 ">
+            <button onClick={()=>{setToggleSetting(!toggleSetting)}} type="button" class="flex mr-6 text-sm bg-gray-800 rounded-full focus:ring-2 focus:ring-gray-200 ">
                 <span class="sr-only">Open user menu</span>
                 <AccountCircleIcon className='text-white' />   </button>
             </div>
-            <div class={toggleSetting?"z-50 bg-white absolute top-6 right-2  my-4 text-base list-none    rounded-2xl shadow-xl ":"hidden"} id="dropdown-user">
+            <div class={toggleSetting?"z-50 bg-white absolute top-4 right-0  my-4 text-base list-none    rounded-2xl shadow-2xl ":"hidden"} id="dropdown-user">
               <div class="px-4 py-3" role="none">
                 <p class="text-sm text-gray-900 dark:text-white" role="none">
                   Neil Sims
