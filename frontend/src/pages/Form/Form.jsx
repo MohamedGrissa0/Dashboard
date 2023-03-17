@@ -42,8 +42,8 @@ export default function Form() {
                     <option value="restaurant">Restaurant</option>
                     <option value='mall'>Mall</option>
                     <option value="amusement park">Amusement park</option>
-                    <option value="hotel">hotel</option>
-                    <option value="cafe">cafe</option>
+                    <option value="hotel">Hotel</option>
+                    <option value="cafe">Cafe</option>
                 </select>
             </div>
            <div>
@@ -63,7 +63,7 @@ export default function Form() {
                   </svg>
                   <div class="flex text-sm text-gray-600">
                     <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-gray-600 hover:text-gray-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-gray-500" >
-                      <span class="">Upload a file</span>
+                      <span class="p-[10px] ">Upload a file</span>
                       <input id="file-upload"  onChange={handleImageUpload}  name="file-upload" type="file" class="sr-only" />
                     </label>
                     <p class="pl-1 text-white">or drag and drop</p>
