@@ -92,7 +92,6 @@ router.delete('/id', async (req, res) => {
         
         
 
-        res.status(200).json(UpdateUser)
 
     }
     catch (err) {
@@ -117,7 +116,7 @@ router.delete('/',async(req,res)=> {
 
 
 //GET ALL Reviews
-router.get('/', async (req, res) => {
+router.get('/a', async (req, res) => {
     const username = req.query.user
     const catName = req.query.cat
     /*try {
@@ -145,6 +144,26 @@ router.get('/', async (req, res) => {
     catch (err) {
         res.status(500).json(err)
     }
+})
+
+router.get('/', async (req,res) => {
+    const person = await Person.findById(personId);
+
+const review = new Review({
+  personId: person._id,
+  username: person.username,
+  postId: postId,
+  rate: rate,
+  comments: comments,
+});
+
+await review.save();
+
+person.reviews.push(review._id);
+
+await person.save();
+
+
 })
 
 

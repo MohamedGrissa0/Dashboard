@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState , useEffect} from "react";
+import axios from "axios"
 
 const UsersTable = () => {
     const [name, setName] = useState("");
@@ -6,63 +7,29 @@ const UsersTable = () => {
     const [isclicked, setisclicked] = useState(false)
     const [isDone , setisDone] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const [users, setUsers] = useState([]);
+   
+    useEffect(() => {
+      axios
+        .get(`http://localhost:4000/api/users/`)
+        .then((response) => {
+          setUsers(response.data);
+          setName(response.data.username)
+          console.log(response.data) // Update the users array with the response data from the Axios request
+          // Use the "users" variable in maps or any other operations
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, []);
+    
+
         
 
 
 
-    };
-    const users = [
-        {
-            id: 1,
-            name: "John Doe",
-            email: "john.doe@example.com",
-            avatar: "https://randomuser.me/api/portraits/men/1.jpg"
-        }, {
-            id: 2,
-            name: "Jane Smith",
-            email: "jane.smith@example.com",
-            avatar: "https://randomuser.me/api/portraits/women/2.jpg"
-        }, {
-            id: 3,
-            name: "Bob Johnson",
-            email: "bob.johnson@example.com",
-            avatar: "https://randomuser.me/api/portraits/men/3.jpg"
-        },
-        {
-          id: 1,
-          name: "John Doe",
-          email: "john.doe@example.com",
-          avatar: "https://randomuser.me/api/portraits/men/1.jpg"
-      }, {
-          id: 2,
-          name: "Jane Smith",
-          email: "jane.smith@example.com",
-          avatar: "https://randomuser.me/api/portraits/women/2.jpg"
-      }, {
-          id: 3,
-          name: "Bob Johnson",
-          email: "bob.johnson@example.com",
-          avatar: "https://randomuser.me/api/portraits/men/3.jpg"
-      },
-      {
-        id: 1,
-        name: "John Doe",
-        email: "john.doe@example.com",
-        avatar: "https://randomuser.me/api/portraits/men/1.jpg"
-    }, {
-        id: 2,
-        name: "Jane Smith",
-        email: "jane.smith@example.com",
-        avatar: "https://randomuser.me/api/portraits/women/2.jpg"
-    }, {
-        id: 3,
-        name: "Bob Johnson",
-        email: "bob.johnson@example.com",
-        avatar: "https://randomuser.me/api/portraits/men/3.jpg"
-    },  
-    ];
+  const handleSubmit = ()=>{}
+  
     return (
       <div className="users-table mt-16 relative overflow-hidden">
         <div className="table-header p-2 grid grid-cols-5 text-center gap-2 rounded-xl">
@@ -88,7 +55,7 @@ const UsersTable = () => {
                   className="username self-center"
                   style={{ wordWrap: "break-word" }}
                 >
-                  {item.name}
+                  {item.username}
                 </p>
                 <p
                   className="email self-center"
@@ -122,14 +89,14 @@ const UsersTable = () => {
         <i className="fas fa-user mr-2 "></i>
         <span className="">Name : </span>
       </label>
-      <input type="text" id="name" name="name" placeholder="Enter your name" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+      <input type="text" id="name" name="name" onChange={(e)=>{setName(e.target.value)}} value={name} placeholder="Enter your name" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
     </div>
     <div className="relative flex flex-col justify-between">
       <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
         <i className="fas fa-envelope mr-2 text-blue-500"></i>
         <span className="">Email :</span>
       </label>
-      <input type="email" id="email" name="email" placeholder="Enter your email" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+      <input type="email" id="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} value={email} placeholder="Enter your email" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
     </div>
   </div>
   
