@@ -10,6 +10,7 @@ import Settings from './pages/Settings/Settings';
 import Review from './pages/Review/Review';
 import ReviewID from './Components/ReviewID/ReviewID';
 import UsersTable from './pages/Users/Users';
+import DeletePost from './Components/DeletePost/DeletePost';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       <Route exact path="/" element={ <Dashboard />} />
       <Route  path="/form" element={ <Form />} />
 
-        
+    <Route path='/place/delete/:id' element={<DeletePost />} />
       <Route  path="/reviews/:id" element={ <ReviewID />} />
       
       <Route  path="/reviews" element={ <Review />} />

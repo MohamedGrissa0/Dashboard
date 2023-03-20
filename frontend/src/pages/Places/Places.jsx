@@ -1,10 +1,32 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import axios from'axios';
+import CloseIcon from '@mui/icons-material/Close';
 export default function Places() {
   const [data, setData] = useState([])
   
-  const [hover, setishover] = useState(false)
+  const [isClick, setisClick] = useState(false);
+  const [id, setid] = useState({});
+  const [formValues, setFormValues] = useState({
+    title:  "",
+    location: "",
+    category: "",
+    description: "",
+    images:null
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+  
+  
+  
+  const handleImageUpload = (event) => {
+    
+    setFormValues({ ...formValues, images: event.target.files });
+  };
+  
   useEffect(() => {
     axios.get("http://localhost:4000/api/places").then(res=>{
       setData(res.data)
@@ -14,6 +36,12 @@ export default function Places() {
     
     
   }, [])
+  console.log(formValues)
+  
+  const handleSubmit = async ()=>{
+    
+    
+  }
   return (
     <div>
       
@@ -63,6 +91,9 @@ export default function Places() {
           <th scope="col" class="px-6 py-3">
             <span class=" flex justify-center">Edit</span>
           </th>
+          <th scope="col" class="px-6 py-3">
+            <span class=" flex justify-center">Delete</span>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -76,8 +107,8 @@ export default function Places() {
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
            <span className=' flex justify-center '>{d.title}</span>
             </th>
-            <td class="px-6 py-4"onMouseEnter={()=>{setishover(true)}} onMouseLeave={()=>{setishover(false)}}>
-            <span className=' flex justify-center '>{hover?(d.location):(d.location.substr(0, 20) + '...')}</span>   
+            <td class="px-6 py-4">
+            <span className=' flex justify-center '><a className='text-blue-600 font-semibold' target='_blank' href={d.location}>View Location</a></span>   
            
             </td>
             <td class="px-6 py-4">
@@ -92,10 +123,14 @@ export default function Places() {
             <a href={"/reviews/"+d._id} class="font-medium flex justify-center  text-blue-600 dark:text-blue-500 hover:underline">View</a>
           
                 </td>
-            <td class="px-6 py-4 text-right">
+            <td class="px-6 py-4  self-center flex justify-center text-right">
            
-              <a href={"/edit/"+d._id} class="font-medium flex justify-center text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+              <button onClick={()=>{setisClick(!isClick);setid(d);setFormValues({ ...formValues, images: d.images})}} class="font-medium text-blue-600 dark:text-blue-500 ">Edit</button>
             </td>
+            <td class="px-6 py-4  text-right">
+           
+           <a href={"/place/delete/"+d._id} class="font-medium flex justify-center text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+         </td>
           </tr>
         
           ))
@@ -105,6 +140,99 @@ export default function Places() {
     </table>
   </div>
   </div>
+  
+  
+  
+  
+  
+  <div  className={isClick?'fixed -top-4 left-[20%] shadow-2xl rounded-2xl':"hidden"}>
+      
+      <section class="max-w-4xl p-6 mx-auto bg-gray-600 rounded-md shadow-md dark:bg-gray-800 mt-20">
+       <div className="flex items-center justify-between"> <h1 class="text-xl font-bold text-white capitalize dark:text-white">Add new place</h1>
+       <CloseIcon  onClick={()=>{setisClick(false)}}   className="text-tomato cursor-pointer"  />
+       
+        </div>        <form onSubmit={handleSubmit()}>
+              <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+                  <div>
+                      <label class="text-white dark:text-gray-200" for="Title">Title</label> 
+          
+                      <input id="Title" required name="title" type="text"value={formValues.title?formValues.title:id.title}   onChange={handleInputChange} class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"></input>
+                  </div>
+      
+                
+      
+                 
+      
+                  <div>
+                      <label class="text-white dark:text-gray-200" for="location">Location</label>
+                      <input id="location" required type="url"  value={id.location?id.location:formValues.location}             onChange={handleInputChange} name="location" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"/>
+                  </div>
+                 
+                  <div>
+                      <label  class="text-white dark:text-gray-200" for="passwordConfirmation">Category</label>
+                      <select    onChange={handleInputChange}value={id.category?id.category:formValues.category} required class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">
+                          <option value="restaurant">Restaurant</option>
+                          <option value='mall'>Mall</option>
+                          <option value="amusement park">Amusement park</option>
+                          <option value="hotel">Hotel</option>
+                          <option value="cafe">Cafe</option>
+                      </select>
+                  </div>
+                 <div>
+                      <label class="text-white dark:text-gray-200" for="passwordConfirmation">Description</label>
+                      <textarea                 onChange={handleInputChange}   value={id.description?id.description:formValues.description} name="description" id="textarea" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">{formValues.description}</textarea>
+                  </div>
+                  
+                  
+                   <div>
+                      <label class="block text-sm font-medium text-white">
+                      Image
+                    </label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                      <div class="space-y-1 text-center">
+                        <svg class="mx-auto h-12 w-12 text-white" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                          <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="flex text-sm text-gray-600">
+                          <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-gray-600 hover:text-gray-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-gray-500" >
+                            <span class="p-[10px] ">Upload a file</span>
+                            <input id="file-upload"  onChange={handleImageUpload}  name="file-upload" type="file" class="sr-only" />
+                          </label>
+                          <p class="pl-1 text-white">or drag and drop</p>
+                        </div>
+                        <p class="text-xs text-white">
+                          PNG, JPG, GIF up to 10MB
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                  {formValues.images &&
+            Array.from(formValues.images).map((image, index) => {
+              let imageUrlObject 
+              
+              if (image instanceof File) {
+                // The image is a file, so it's not a URL yet
+                 imageUrlObject = URL.createObjectURL(image);
+              } else{
+                imageUrlObject=  image;
+              }
+              
+              return( <img className="rounded-3xl w-28" key={index} src={imageUrlObject} alt="" />
+           )
+                  })} </div>
+                  
+                 
+              </div>
+      
+              <div class="flex justify-center mt-6">
+                  <button  class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Save</button>
+              </div>
+          </form>
+      </section>
+      
+          </div>
+  
     </div>
   )
 }

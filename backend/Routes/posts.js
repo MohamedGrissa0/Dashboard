@@ -32,7 +32,18 @@ router.get("/places" , async (req,res) => {
        res.status(500).json(err)
    }
 } )
-
+router.delete("/place/delete/:id",async(req,res)=>{
+    const id=req.params.id
+    console.log(id)
+  const post=await  Post.findById(id)
+ try{
+    await post.deleteOne()
+    res.status(200).send({result:"sucess"})
+}catch{
+    res.status(400).send({result:"fail"})  
+} 
+   
+})
 
 // SEARCH BY PLACE NAME
 router.get("/search" , async (req,res) => {

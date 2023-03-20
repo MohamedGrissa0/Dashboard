@@ -62,7 +62,7 @@ console.log(data)
                 </th>
                
                 <th scope="col" class="px-6  flex justify-center py-3">
-                  <span class="">View Reviews</span>
+                  <span class="">Delete Reviews</span>
                 </th>
                 <th scope="col" class="px-6 py-3">
                   <span class=" flex justify-center">Edit</span>
@@ -93,7 +93,7 @@ console.log(data)
                   <span className=' flex justify-center '>{d.postId}</span>   
                   </td>
                   <td class="px-6 py-4 text-right">
-                  <a href={"/reviews/"+d._id} class="font-medium flex justify-center  text-blue-600 dark:text-blue-500 hover:underline">View</a>
+                  <a href={"/delete/reviews/"+d._id} class="font-medium flex justify-center  text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
                 
                       </td>
                   <td class="px-6 py-4 text-right">
