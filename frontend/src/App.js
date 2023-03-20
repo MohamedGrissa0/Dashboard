@@ -9,11 +9,16 @@ import Places from './pages/Places/Places';
 import Settings from './pages/Settings/Settings';
 import Review from './pages/Review/Review';
 import ReviewID from './Components/ReviewID/ReviewID';
+import UsersTable from './pages/Users/Users';
+
 function App() {
   return (
     <Router >
       <Navbar />
       <Routes>
+      <Route exact path="/" element={ <Dashboard />} />
+      <Route  path="/form" element={ <Form />} />
+
         
       <Route  path="/reviews/:id" element={ <ReviewID />} />
       
@@ -23,6 +28,8 @@ function App() {
       <Route exact path="/" element={ <Dashboard />} />
        <Route  path="/places" element={ <Places />} />
       <Route  path="/form" element={ <Form />} />
+      <Route  path="/users" element={ <UsersTable />} />
+
       </Routes>
    
     </Router>
