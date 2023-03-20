@@ -6,8 +6,10 @@ const UsersTable = () => {
     const [isclicked, setisclicked] = useState(false)
     const [isDone , setisDone] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        
+
 
 
     };
@@ -113,7 +115,7 @@ const UsersTable = () => {
     )
   })}
   <div>
-  <form onSubmit={handleSubmit} className={isclicked ? "p-3 absolute top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-999 bg-white rounded-lg shadow-xl w-11/12 md:w-2/3 lg:w-1/2" : "hidden"}>
+  <form onSubmit={handleSubmit} className={isclicked ? "p-3 fixed  top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-999 bg-white rounded-lg shadow-xl w-11/12 md:w-2/3 lg:w-1/2" : "hidden"}>
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-3">
     <div className="relative flex flex-col justify-between">
       <label htmlFor="name" className="block font-bold mb-2">
