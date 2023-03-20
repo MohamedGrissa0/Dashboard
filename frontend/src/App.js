@@ -8,12 +8,15 @@ import Users from './pages/Users/Users';
 import Places from './pages/Places/Places';
 import Settings from './pages/Settings/Settings';
 import Review from './pages/Review/Review';
+import ReviewID from './Components/ReviewID/ReviewID';
 function App() {
   return (
     <Router >
       <Navbar />
       <Routes>
         
+      <Route  path="/reviews/:id" element={ <ReviewID />} />
+      
       <Route  path="/reviews" element={ <Review />} />
       <Route  path="/settings" element={ <Settings />} />
       <Route  path="/users" element={ <Users />} />
