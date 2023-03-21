@@ -116,7 +116,7 @@ router.delete('/',async(req,res)=> {
 
 
 //GET ALL Reviews
-router.get('/a', async (req, res) => {
+router.get('/', async (req, res) => {
     const username = req.query.user
     const catName = req.query.cat
     /*try {
@@ -146,25 +146,7 @@ router.get('/a', async (req, res) => {
     }
 })
 
-router.get('/', async (req,res) => {
-    const person = await Person.findById(personId);
 
-const review = new Review({
-  personId: person._id,
-  username: person.username,
-  postId: postId,
-  rate: rate,
-  comments: comments,
-});
-
-await review.save();
-
-person.reviews.push(review._id);
-
-await person.save();
-
-
-})
 
 
 module.exports = router;

@@ -1,25 +1,43 @@
-import React from "react";
-import {FaTrashAlt} from 'react-icons/fa';
+import React , {useState} from "react";
+import { FaStar, FaRegStar, FaTrash } from 'react-icons/fa';
 import Review from "./Review";
 
 export default function ReviewCard(props) {
-        return (<div class="max-w-sm w-full lg:max-w-full lg:flex my-2 shadow-xl">
-        <div class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-          <div class="mb-8">
-          
-            <div class="text-gray-900 font-bold text-xl mb-2">{props.place}</div>
-            <p class="text-gray-700 text-base">{props.review}.</p>
-          </div>
-          <div class="flex items-center">
-            <img class="w-10 h-10 rounded-full mr-4" src={props.icon} alt="Avatar of user"/>
-            <div class="text-sm">
-              <p class="text-gray-900 leading-none">Jonathan Reinink</p>
-              <p class="text-gray-600">Aug 18</p>
-            </div>
-          </div>
-        </div>
+
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        i < props.rate ? (
+          <FaStar key={i} className="text-yellow-400" />
+        ) : (
+          <FaRegStar key={i} />
+        )
+      );
+    }
+    return stars;
+  };
+
+  
+
+  return (
+    <div className="bg-white rounded-lg shadow-xl p-6">
+      <p className="text-gray-700 text-sm mb-4">{props.review}</p>
+      <div className="flex items-center mb-2">
+        <i className="fas fa-map-marker-alt text-gray-400 "></i>
+        <p className="text-gray-700 text-sm">{props.place}</p>
       </div>
+      <div className="flex justify-between items-center">
+        <p className="flex">{renderStars()}</p>
+        <button
+        
+          className="text-red-500 text-center flex flex-col items-center text-sm mt-4"
+        >
+          <FaTrash className="mr-1" /> Delete
+        </button>
+      </div>
+    </div>
+  );
+};
 
 
-    );
-}

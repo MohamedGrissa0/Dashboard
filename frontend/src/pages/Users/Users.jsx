@@ -2,19 +2,25 @@ import React, {useState , useEffect} from "react";
 import axios from "axios"
 
 const UsersTable = () => {
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
+  const [formValues, setFormValues] = useState({
+    username:  "",
+    Email: "",
+  });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
     const [isclicked, setisclicked] = useState(false)
     const [isDone , setisDone] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
     const [users, setUsers] = useState([]);
+    const [ID,setID] = useState({}) 
    
     useEffect(() => {
       axios
         .get(`http://localhost:4000/api/users/`)
         .then((response) => {
           setUsers(response.data);
-          setName(response.data.username)
           console.log(response.data) // Update the users array with the response data from the Axios request
           // Use the "users" variable in maps or any other operations
         })
@@ -22,13 +28,16 @@ const UsersTable = () => {
           console.log(error);
         });
     }, []);
-    
+     const handleSubmit = async (e)=>
+     {
+      e.preventDefault()
+        console.log(formValues)
+     }
 
         
 
 
 
-  const handleSubmit = ()=>{}
   
     return (
       <div className="users-table mt-16 relative overflow-hidden">
@@ -65,7 +74,7 @@ const UsersTable = () => {
                 </p>
                 <button
                   className="update-btn flex justify-center items-center"
-                  onClick={() => setisclicked(!isclicked)}
+                  onClick={()=>{setisclicked(!isclicked);setID(item);console.log(ID)}}
                 >
                   <span className="btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">
                     Edit
@@ -89,20 +98,20 @@ const UsersTable = () => {
         <i className="fas fa-user mr-2 "></i>
         <span className="">Name : </span>
       </label>
-      <input type="text" id="name" name="name" onChange={(e)=>{setName(e.target.value)}} value={name} placeholder="Enter your name" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+      <input type="text" id="name" name="username" onChange={handleInputChange} value={formValues.username?formValues.username:ID.username} placeholder="Enter your name" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
     </div>
     <div className="relative flex flex-col justify-between">
       <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
         <i className="fas fa-envelope mr-2 text-blue-500"></i>
         <span className="">Email :</span>
       </label>
-      <input type="email" id="email" name="email" onChange={(e)=>{setEmail(e.target.value)}} value={email} placeholder="Enter your email" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+      <input type="email" id="email" name="Email" onChange={handleInputChange} value={formValues.Email?formValues.Email:ID.Email} placeholder="Enter your email" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
     </div>
   </div>
   
   <div className="flex justify-center mt-5">
     <button type="button" onClick={() => setisclicked(false)} className="bg-white text-blue-500 text-lg px-6 py-2 rounded-lg mr-4 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent border border-blue-500 transition-all duration-200 ease-in-out">Cancel</button>
-    <button type="button" className="bg-blue-500 text-white text-lg px-6 py-2 rounded-lg mr-4 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition-all duration-200 ease-in-out">Done</button>
+    <button type="sumbit" className="bg-blue-500 text-white text-lg px-6 py-2 rounded-lg mr-4 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transition-all duration-200 ease-in-out">Done</button>
   </div>
 </form>
 
