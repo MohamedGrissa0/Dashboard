@@ -105,7 +105,7 @@ const UsersTable = () => {
         <i className="fas fa-envelope mr-2 text-blue-500"></i>
         <span className="">Email :</span>
       </label>
-      <input type="email" id="email" name="Email" onChange={handleInputChange} value={formValues.Email?formValues.Email:ID.Email} placeholder="Enter your email" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+      <input type="email" id="email" name="Email" onChange={handleInputChange} value={formValues.Email?formValues.Email:ID.email} placeholder="Enter your email" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
     </div>
   </div>
   

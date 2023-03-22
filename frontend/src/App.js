@@ -11,6 +11,10 @@ import Review from './pages/Review/Review';
 import ReviewID from './Components/ReviewID/ReviewID';
 import UsersTable from './pages/Users/Users';
 import DeletePost from './Components/DeletePost/DeletePost';
+import Allusers from './pages/Users/AllUsers';
+import Reviews from './pages/Review/Reviews';
+
+
 
 function App() {
   return (
@@ -24,12 +28,15 @@ function App() {
       <Route  path="/reviews/:id" element={ <ReviewID />} />
       
       <Route  path="/reviews" element={ <Review />} />
+      <Route  path="/review" element={ <Reviews />} />
+
       <Route  path="/settings" element={ <Settings />} />
-      <Route  path="/users" element={ <Users />} />
       <Route exact path="/" element={ <Dashboard />} />
        <Route  path="/places" element={ <Places />} />
       <Route  path="/form" element={ <Form />} />
       <Route  path="/users" element={ <UsersTable />} />
+      <Route  path="/allusers" element={ <Allusers />} />
+
 
       </Routes>
    

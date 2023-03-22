@@ -86,13 +86,13 @@ import GroupIcon from '@mui/icons-material/Group';export default function Navbar
                 </Link>
          </li>
          <li>
-            <Link to="/reviews" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Link to="/review" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
             <RateReviewIcon />
                  <span class="flex-1 ml-3 whitespace-nowrap">Reviews</span>
             </Link>
          </li>
          <li>
-            <Link to="/users" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <Link to="/allusers" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
               <GroupIcon   />
               
                <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
