@@ -43,64 +43,44 @@ router.post('/', async (req, res) => {
 
 
 //Update Review
-router.put('/:id', async (req, res) => {
-
+router.put('/:id', async (req, res) => { // add review ID parameter to URL
     try {
-
-        const review = await Review.findById(req.params.id)
-        if (review.username === req.body.username) {
-            try {
-                const updatePost = await Post.findByIdAndUpdate(req.params.id,
-                    {
-                        $set: req.body
-                    }, { new: true })
-                res.status(200).json(updatePost)
-            }
-            catch (err) {
-
-            }
-        }
-        else {
-            res.status(401).json("You can update only your post ")
-        }
-
-        res.status(200).json(UpdateUser)
-
+      const updatedReview = await Review.findByIdAndUpdate(req.params.id, { // use params to get review ID
+        $set: {
+          comments: req.body.comments,
+          Rate: req.body.Rate, // fix camelCase
+        },
+      }, { new: true });
+      res.status(200).json(updatedReview);
+    } catch (err) {
+      console.error(`Error updating review: ${err}`); // fix spacing and capitalization
+      res.status(500).json(err);
     }
-    catch (err) {
-        res.status(500).json(err)
-    }
-
-
-
-})
-
+  });
+  
 
 //Delete Review
-router.delete('/id', async (req, res) => {
-
+router.delete('/', async (req, res) => {
     try {
+        const review = await Review.findById(req.body.id);
 
-        const review = await Review.findById(req.body)
-            try {
-                await review.delete()
-                res.status(200).json("POST HAS BEEN DELETED")
-            }
-            catch (err) {
-                console.log(err)
-            }
-        
-        
+        if (!review) {
+            return res.status(404).json({ message: "Review not found" });
+        }
 
+       
 
+        try {
+            await Review.findByIdAndDelete(review._id);
+
+            res.status(200).json({ message: "User has been deleted" });
+        } catch (err) {
+            res.status(500).json({ message: "Something went wrong" });
+        }
+    } catch (err) {
+        res.status(500).json({ message: "Something went wrong" });
     }
-    catch (err) {
-        res.status(500).json(err)
-    }
-
-
-
-})
+});
 //DELETE ALL REVIEWS
 router.delete('/',async(req,res)=> {
     try{

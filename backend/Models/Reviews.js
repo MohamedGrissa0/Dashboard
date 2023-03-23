@@ -12,8 +12,8 @@ const ReviewSchema = new mongoose.Schema(
       postId: {
         type: String,
       },
-      rate: {
-        type: Number,
+      Rate: {
+        type: String,
       },
       comments: {
         type: String,
