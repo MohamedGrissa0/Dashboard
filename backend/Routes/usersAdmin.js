@@ -33,34 +33,28 @@ router.put('/:id', async (req, res) => {
 })
 
 //Delete User
-router.delete('/:id', async (req, res) => {
-    if (req.body.userId === req.params.id) {
-        try {
-            const user = await User.findById(req.params.id)
+router.delete('/', async (req, res) => {
+    try {
+        const user = await User.findById(req.body.id);
 
-            try {
-                await Post.deleteMany({username : user.username })
-                await User.findByIdAndDelete(req.params.id)
-
-                res.status(200).json("USER HAS BEEN DELETED ")
-
-            } 
-            catch (err) {
-                res.status(500).json(err)
-            }
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
-        catch (err) {
-            res.status(401),json("YOu can DELETE ONLY YOUR ACCOUNT")
-e        }
 
+       
 
+        try {
+            await Review.deleteMany({ username: user.username });
+            await User.findByIdAndDelete(user._id);
 
+            res.status(200).json({ message: "User has been deleted" });
+        } catch (err) {
+            res.status(500).json({ message: "Something went wrong" });
+        }
+    } catch (err) {
+        res.status(500).json({ message: "Something went wrong" });
     }
-    else {
-        res.status(401).json("You can only Delete your account !") // 401 === "Not allowed"
-    }
-
-})
+});
 
 
 
@@ -86,7 +80,7 @@ router.get('/:id' , async(req,res)=>
 router.get('/', async (req, res) => {
   try {
     const users = await User.find();
-    const sanitizedUsers = users.map(({ _id ,profilepic, username,email,token, ...others }) => ({ _id , username,email,token}));
+    const sanitizedUsers = users.map(({ _id ,profilepic, username,email,token,password, ...others }) => ({ _id , username,email,token,password}));
     res.status(200).json(sanitizedUsers);
   } catch (err) {
     res.status(500).json(err);
