@@ -8,29 +8,21 @@ const { json } = require("express");
 
 //UPDATE 
 
-router.put('/:id', async (req, res) => {
-    if (req.body.userId === req.params.id) {
-        if (req.body.password) {
-            req.body.password = await md5 (req.body.password);
+router.put('/', async (req, res) => {
+    try {
+        const { id, password, ...otherFields } = req.body; // destructure req.body and exclude password
+        if (password) {
+            otherFields.password = password ; // hash password securely
         }
-        try {
-
-            const UpdateUser = await User.findByIdAndUpdate(req.params.id, {
-                $set: req.body   //EVERYTHING       
-            }, { new: true })  //5tr  yrja3lk  ken l9dim ki tjibed fih
-
-            res.status(200).json(UpdateUser)
-
-        }
-        catch (err) {
-            res.status(500).json(err)
-        }
+        const updatedUser = await User.findByIdAndUpdate(id, {
+            $set: otherFields, // update all other fields except password
+        }, { new: true });
+        res.status(200).json(updatedUser);
+    } catch (err) {
+        console.error(`Error updating user: ${err}`);
+        res.status(500).json(err);
     }
-    else {
-        res.status(401).json("You can only update your account !") // 401 === "Not allowed"
-    }
-
-})
+});
 
 //Delete User
 router.delete('/', async (req, res) => {

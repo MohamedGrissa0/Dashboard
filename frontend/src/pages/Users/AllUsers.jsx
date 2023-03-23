@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { useEffect , use } from 'react';
 import axios from'axios';
+import md5 from "md5"
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Allusers() {
     const [formValues, setFormValues] = useState({
+        id:"",
         username:  "",
-        Email: "",
-        Password:""
+        email: "",
+        password:""
       });
       const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -15,6 +17,8 @@ export default function Allusers() {
       };
         const [isclicked, setisclicked] = useState(false)
         const [isDone , setisDone] = useState(false)
+        const [isUpdateDone , setUpdateisDone] = useState(false)
+
         const [isLoading, setIsLoading] = useState(false);
         const [users, setUsers] = useState([]);
         const [ID,setID] = useState({}) 
@@ -42,7 +46,24 @@ export default function Allusers() {
             }
             window.location.reload()
         };
-          
+
+        const handleUpdate = async (e) => {
+            console.log(ID)
+            e.preventDefault();
+            try {
+                await axios.put(`http://localhost:4000/api/users/`, {
+                    id: ID._id, // add user id
+                    username: formValues.username?formValues.username:ID.username,
+                    email: formValues.email?formValues.email:ID.email,
+                    password: formValues.password?md5(formValues.password):ID.password,
+                });
+                console.log(`Updated successfully.`);
+                setUpdateisDone(true); // fix camelCase
+            } catch (error) {
+                console.error(`Error updating user: ${error}`); // fix spacing and capitalization
+            }
+            window.location.reload();
+        };
   
     
     
@@ -59,7 +80,21 @@ export default function Allusers() {
       </div>
     </div>
   </div>
+  
 )}
+
+{isUpdateDone && (
+  <div className="bg-teal-100 flex items-center justify-center border-t-4 w-[180px] md:w-[360px] text-center lg:w-[600px] xl:w-[600px] absolute z-999 top-[50%] left-[25%] border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
+    <div className="flex justify-center items-center">
+      <div className="py-1"><svg className="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+      <div>
+        <p className="font-bold">Account has been Updating Successfully</p>
+      </div>
+    </div>
+  </div>
+  
+)}
+
 
       
 <div class="max-w-full mt-20 px-10">
@@ -143,9 +178,9 @@ export default function Allusers() {
            
             <button
                   className="update-btn flex justify-center items-center"
-                  onClick={()=>{setisclicked(!isclicked);setID(item);console.log(ID)}}
+                  onClick={()=>{setisclicked(!isclicked);setID(item);console.log(item)}}
                 >
-                  <span className="btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">
+                  <span  className="btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">
                     Edit
                   </span>
                 </button>            </td>
@@ -170,7 +205,7 @@ export default function Allusers() {
   
   
   
-  <form  className={isclicked ? "p-3 fixed  top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-999 bg-white rounded-lg shadow-xl w-11/12 md:w-2/3 lg:w-1/2" : "hidden"}>
+  <form onSubmit={handleUpdate}  className={isclicked ? "p-3 fixed  top-[35%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-999 bg-white rounded-lg shadow-xl w-11/12 md:w-2/3 lg:w-1/2" : "hidden"}>
   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-3">
     <div className="relative flex flex-col justify-between">
       <label htmlFor="name" className="block font-bold mb-2">
@@ -184,14 +219,14 @@ export default function Allusers() {
         <i className="fas fa-envelope mr-2 text-blue-500"></i>
         <span className="">Email :</span>
       </label>
-      <input type="email" id="email" name="Email" onChange={handleInputChange} value={formValues.Email?formValues.Email:ID.email} placeholder="Enter your email" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+      <input type="email" id="email" name="email" onChange={handleInputChange} value={formValues.email?formValues.email:ID.email} placeholder="Enter your email" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
     </div>
     <div className="relative flex flex-col justify-between">
       <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
         <i className="fas fa-envelope mr-2 text-blue-500"></i>
         <span className="">password :</span>
       </label>
-      <input type="text" id="password" name="Password" onChange={handleInputChange} value={formValues.Password?formValues.Password:ID.password} placeholder="Enter your email" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+      <input type="text" id="password" name="password" onChange={handleInputChange} value={formValues.password?formValues.password:ID.password} placeholder="Enter your email" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
     </div>
   </div>
   
