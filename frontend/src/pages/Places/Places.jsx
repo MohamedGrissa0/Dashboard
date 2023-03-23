@@ -8,13 +8,14 @@ export default function Places() {
   const [isClick, setisClick] = useState(false);
   const [id, setid] = useState({});
   const [formValues, setFormValues] = useState({
-    title:  "",
-    location: "",
-    category: "",
-    description: "",
-    images:[]
+    title:       '',
+    location:    '',
+    category:   '',
+    description: '',
+    images:     []
   });
-
+console.log(id);
+console.log(formValues)
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
@@ -147,9 +148,9 @@ export default function Places() {
             <a href={"/reviews/"+d._id} class="font-medium flex justify-center  text-blue-600 dark:text-blue-500 hover:underline">View</a>
           
                 </td>
-            <td class="px-6 py-4  self-center flex justify-center text-right">
+            <td class="px-6 py-4 items-center">
            
-              <button onClick={()=>{setisClick(!isClick);setid(d);setFormValues({ ...formValues, images: d.images})}} class="font-medium text-blue-600 dark:text-blue-500 ">Edit</button>
+              <button onClick={()=>{setisClick(!isClick);setid(d);setFormValues(d)}} class="font-medium text-blue-600 dark:text-blue-500 ">Edit</button>
             </td>
             <td class="px-6 py-4  text-right">
            
@@ -177,7 +178,7 @@ export default function Places() {
        
         </div>  
         
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit}   encType="multipart/form-data">
               <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                   <div>
                       <label class="text-white dark:text-gray-200" for="Title">Title</label> 
@@ -191,12 +192,12 @@ export default function Places() {
       
                   <div>
                       <label class="text-white dark:text-gray-200" for="location">Location</label>
-                      <input id="location" required type="url"  value={formValues.location?formValues.location:id.location}             onChange={handleInputChange} name="location" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"/>
+                      <input id="location" required type="url"  value={formValues.location}             onChange={handleInputChange} name="location" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"/>
                   </div>
                  
                   <div>
                       <label  class="text-white dark:text-gray-200" for="passwordConfirmation">Category</label>
-                      <select    onChange={handleInputChange}value={formValues.category?formValues.category:id.category} required class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">
+                      <select  name="category"   onChange={handleInputChange}value={formValues.category} required class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">
                           <option value="">Select a category</option>
                           <option value="restaurant">Restaurant</option>
                           <option value='mall'>Mall</option>
@@ -207,7 +208,7 @@ export default function Places() {
                   </div>
                  <div>
                       <label class="text-white dark:text-gray-200" for="passwordConfirmation">Description</label>
-                      <textarea                 onChange={handleInputChange}   value={formValues.description?formValues.description:id.description} name="description" id="textarea" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">{formValues.description}</textarea>
+                      <textarea                 onChange={handleInputChange}   value={formValues.description} name="description" id="textarea" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">{formValues.description}</textarea>
                   </div>
                   
                   
@@ -223,7 +224,7 @@ export default function Places() {
                         <div class="flex text-sm text-gray-600">
                           <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-gray-600 hover:text-gray-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-gray-500" >
                             <span class="p-[10px] ">Upload a file</span>
-                            <input id="file-upload" multiple onClick={()=>{ if(formValues.images.length===3){setFormValues({ ...formValues, images: [] });}}} onChange={handleImageUpload}  name="file-upload" type="file" class="sr-only" />
+                            <input id="file-upload" multiple  onChange={handleImageUpload}  name="file-upload" type="file" class="sr-only" />
                           </label>
                           <p class="pl-1 text-white">or drag and drop</p>
                         </div>
