@@ -1,14 +1,50 @@
 const router = require("express").Router();
 const Post = require("../Models/Post");
+const multer = require("multer");
 
 
-router.get("/edit/:id" , async (req,res) => {
-   
+
+
+// Configure multer middleware to handle file uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "uploads/");
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + "-" + file.originalname);
+    },
+  });
+  
+  const upload = multer({ storage: storage });
+
+  
+  
+  
+router.post("/edit/:id" , upload.array("images"), async (req,res) => {
+        const id = req.params.id   
+        console.log(req.params.id)  
      try {
         
-        const id = req.params.id       
-        const categories= Post.find({_id : id})
-      res.status(200).send([{title : "aslema ya world" , description : "fnnfzkfbezfbezbfezbfibezfezbfbzefbzefuibezfbuezbfiezbfubezfbiazbfzbe" , images:"https://images.pexels.com/photos/12509875/pexels-photo-12509875.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" , review: 50 , reviewNB : 4.5 },{title : "hello world" , description : "fnnfzkfbezfbezbfezbfibezfezbfbzefbzefuibezfbuezbfiezbfubezfbiazbfzbe" , images:"https://images.pexels.com/photos/12509875/pexels-photo-12509875.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" , review: 50 , reviewNB : 4.5 }])
+     
+     const post  = await Post.findById(id)
+     
+     if(post){
+         post.title = req.body.title;
+         post.location = req.body.location;
+         post.category = req.body.category;
+         post.description = req.body.description;
+    if (req.files) {
+      post.images = req.files.map((file) => file.path);
+    }
+
+    const updatedPost = await post.save();
+    res.status(200).json({ message: "Post updated", post: updatedPost });
+   
+     }
+     
+     if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
     
 
     }
@@ -17,6 +53,9 @@ router.get("/edit/:id" , async (req,res) => {
         res.status(500).json(err)
     }
 } )
+
+
+
 router.get("/places" , async (req,res) => {
    
     try {
@@ -32,6 +71,39 @@ router.get("/places" , async (req,res) => {
        res.status(500).json(err)
    }
 } )
+
+
+
+router.post("/form", upload.array("images"),async(req,res)=>{
+
+
+
+    
+    
+    try {
+        const form = new Post({
+            title: req.body.title,
+            location: req.body.location,
+            category: req.body.category,
+            description: req.body.description,
+            images: req.files.map(file => file.path)
+          });
+        const savedReview = await form.save()
+        res.status(200).json(savedReview)
+        
+    }
+    catch (err) {
+        res.status(500).json(err)
+    }
+    
+})
+
+
+
+
+
+
+
 router.delete("/place/delete/:id",async(req,res)=>{
     const id=req.params.id
     console.log(id)

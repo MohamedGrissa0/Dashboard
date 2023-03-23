@@ -1,30 +1,75 @@
+import  axios  from 'axios';
 import React, { useState } from 'react'
 
 export default function Form() {
-    const [images, setImages] = useState([]);
-
-    const handleImageUpload = (event) => {
-      const uploadedImages = event.target.files;
-      const newImages = [...images];
-      for (let i = 0; i < uploadedImages.length; i++) {
-        newImages.push(uploadedImages[i]);
-      }
-    if (images.length<3){
-        setImages(newImages);
-    }  
+ 
+    const [formValues, setFormValues] = useState({
+      title:  "",
+      location: "",
+      category: "",
+      description: "",
+      images:[]
+    });
+  
+    const handleInputChange = (event) => {
+      const { name, value } = event.target;
+      setFormValues({ ...formValues, [name]: value });
+    };
     
   
-    };
+    
+    const handleImageUpload = (event) => {
+      
+      const newImages = Array.from(event.target.files);
+ 
+       setFormValues({ ...formValues, images: [...formValues.images, ...newImages] });
+    
+      
+      
+      
+        };
+    console.log(formValues)
+    const handleSubmit = async (e)=>{
+      e.preventDefault();
+      const formData = new FormData();
+
+      formData.append('title', formValues.title);
+      formData.append('location', formValues.location);
+      formData.append('category', formValues.category);
+      formData.append('description', formValues.description);
+    
+      for (let i = 0; i < formValues.images.length; i++) {
+        formData.append('images', formValues.images[i]);
+      }
+      axios.post("http://localhost:4000/api/form",formData).then(res=>{
+       if(res.status===200){
+        alert("sucess")
+       }else{
+        alert("fail")
+       }
+      }).catch(e=>{
+        console.log(e)
+      })
+      
+    }
+   
+    
+   
+    
+    
+    
+    
+    
   return (
     <div>
       
 <section class="max-w-4xl p-6 mx-auto bg-gray-600 rounded-md shadow-md dark:bg-gray-800 mt-20">
     <h1 class="text-xl font-bold text-white capitalize dark:text-white">Add new place</h1>
-    <form>
+    <form onSubmit={handleSubmit }  encType="multipart/form-data">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
                 <label class="text-white dark:text-gray-200" for="Title">Title</label>
-                <input id="Title" required name="title" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"/>
+                <input value={formValues.title}   onChange={handleInputChange} id="Title" required name="title" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"/>
             </div>
 
           
@@ -33,12 +78,13 @@ export default function Form() {
 
             <div>
                 <label class="text-white dark:text-gray-200" for="location">Location</label>
-                <input id="location" required type="url" name="location" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"/>
+                <input id="location" value={formValues.location}  onChange={handleInputChange}  required type="url" name="location" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"/>
             </div>
            
             <div>
                 <label  class="text-white dark:text-gray-200" for="passwordConfirmation">Category</label>
-                <select required class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">
+                <select name="category" onChange={handleInputChange} value={formValues.category}  required class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">
+                    <option value="">Select a category</option>
                     <option value="restaurant">Restaurant</option>
                     <option value='mall'>Mall</option>
                     <option value="amusement park">Amusement park</option>
@@ -48,7 +94,7 @@ export default function Form() {
             </div>
            <div>
                 <label class="text-white dark:text-gray-200" for="passwordConfirmation">Description</label>
-                <textarea name="description" id="textarea" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"></textarea>
+                <textarea     onChange={handleInputChange}   value={formValues.description}  name="description" id="textarea" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"></textarea>
             </div>
             
             
@@ -64,7 +110,7 @@ export default function Form() {
                   <div class="flex text-sm text-gray-600">
                     <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-gray-600 hover:text-gray-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-gray-500" >
                       <span class="p-[10px] ">Upload a file</span>
-                      <input id="file-upload"  onChange={handleImageUpload}  name="file-upload" type="file" class="sr-only" />
+                      <input id="file-upload" onClick={()=>{ if(formValues.images.length===3){setFormValues({ ...formValues, images: [] });}}}  multiple onChange={handleImageUpload}  name="file-upload" type="file" class="sr-only" />
                     </label>
                     <p class="pl-1 text-white">or drag and drop</p>
                   </div>
@@ -75,10 +121,19 @@ export default function Form() {
               </div>
             </div>
             <div>
-            {images &&
-          Array.from(images).map((image, index) => (
-            <img className="rounded-3xl w-40" key={index} src={URL.createObjectURL(image)} alt="" />
-          ))} </div>
+            {formValues.images &&
+          Array.from(formValues.images).map((image, index) => {
+            let imageUrlObject 
+              
+            if (image instanceof File) {
+              // The image is a file, so it's not a URL yet
+               imageUrlObject = URL.createObjectURL(image);
+            } else{
+              imageUrlObject=  image;
+            }
+            
+           return( <img className="rounded-3xl w-40" key={index} src={imageUrlObject} alt="" />
+       )})} </div>
             
            
         </div>

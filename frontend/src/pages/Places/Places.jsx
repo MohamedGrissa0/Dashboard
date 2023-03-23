@@ -12,7 +12,7 @@ export default function Places() {
     location: "",
     category: "",
     description: "",
-    images:null
+    images:[]
   });
 
   const handleInputChange = (event) => {
@@ -23,9 +23,14 @@ export default function Places() {
   
   
   const handleImageUpload = (event) => {
+      
+    const newImages = Array.from(event.target.files);
+ 
+     setFormValues({ ...formValues, images: [...formValues.images, ...newImages] });
+  
+
     
-    setFormValues({ ...formValues, images: event.target.files });
-  };
+      };
   
   useEffect(() => {
     axios.get("http://localhost:4000/api/places").then(res=>{
@@ -38,8 +43,27 @@ export default function Places() {
   }, [])
   console.log(formValues)
   
-  const handleSubmit = async ()=>{
-    
+  const handleSubmit = async (e)=>{
+    e.preventDefault();
+    const formData = new FormData();
+
+    formData.append('title', formValues.title);
+    formData.append('location', formValues.location);
+    formData.append('category', formValues.category);
+    formData.append('description', formValues.description);
+  
+    for (let i = 0; i < formValues.images.length; i++) {
+      formData.append('images', formValues.images[i]);
+    }
+    axios.post("http://localhost:4000/api/edit/"+id._id,formData).then(res=>{
+     if(res.status===200){
+      alert("sucess")
+     }else{
+      alert("fail")
+     }
+    }).catch(e=>{
+      console.log(e)
+    })
     
   }
   return (
@@ -105,7 +129,7 @@ export default function Places() {
               
             </td>
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-           <span className=' flex justify-center '>{d.title}</span>
+             <span className=' flex justify-center '>{d.title}</span>
             </th>
             <td class="px-6 py-4">
             <span className=' flex justify-center '><a className='text-blue-600 font-semibold' target='_blank' href={d.location}>View Location</a></span>   
@@ -151,7 +175,9 @@ export default function Places() {
        <div className="flex items-center justify-between"> <h1 class="text-xl font-bold text-white capitalize dark:text-white">Add new place</h1>
        <CloseIcon  onClick={()=>{setisClick(false)}}   className="text-tomato cursor-pointer"  />
        
-        </div>        <form onSubmit={handleSubmit()}>
+        </div>  
+        
+              <form onSubmit={handleSubmit}>
               <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                   <div>
                       <label class="text-white dark:text-gray-200" for="Title">Title</label> 
@@ -165,12 +191,13 @@ export default function Places() {
       
                   <div>
                       <label class="text-white dark:text-gray-200" for="location">Location</label>
-                      <input id="location" required type="url"  value={id.location?id.location:formValues.location}             onChange={handleInputChange} name="location" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"/>
+                      <input id="location" required type="url"  value={formValues.location?formValues.location:id.location}             onChange={handleInputChange} name="location" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"/>
                   </div>
                  
                   <div>
                       <label  class="text-white dark:text-gray-200" for="passwordConfirmation">Category</label>
-                      <select    onChange={handleInputChange}value={id.category?id.category:formValues.category} required class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">
+                      <select    onChange={handleInputChange}value={formValues.category?formValues.category:id.category} required class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">
+                          <option value="">Select a category</option>
                           <option value="restaurant">Restaurant</option>
                           <option value='mall'>Mall</option>
                           <option value="amusement park">Amusement park</option>
@@ -180,7 +207,7 @@ export default function Places() {
                   </div>
                  <div>
                       <label class="text-white dark:text-gray-200" for="passwordConfirmation">Description</label>
-                      <textarea                 onChange={handleInputChange}   value={id.description?id.description:formValues.description} name="description" id="textarea" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">{formValues.description}</textarea>
+                      <textarea                 onChange={handleInputChange}   value={formValues.description?formValues.description:id.description} name="description" id="textarea" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring">{formValues.description}</textarea>
                   </div>
                   
                   
@@ -196,7 +223,7 @@ export default function Places() {
                         <div class="flex text-sm text-gray-600">
                           <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-gray-600 hover:text-gray-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-gray-500" >
                             <span class="p-[10px] ">Upload a file</span>
-                            <input id="file-upload"  onChange={handleImageUpload}  name="file-upload" type="file" class="sr-only" />
+                            <input id="file-upload" multiple onClick={()=>{ if(formValues.images.length===3){setFormValues({ ...formValues, images: [] });}}} onChange={handleImageUpload}  name="file-upload" type="file" class="sr-only" />
                           </label>
                           <p class="pl-1 text-white">or drag and drop</p>
                         </div>
@@ -215,7 +242,7 @@ export default function Places() {
                 // The image is a file, so it's not a URL yet
                  imageUrlObject = URL.createObjectURL(image);
               } else{
-                imageUrlObject=  image;
+                   imageUrlObject=  `http://localhost:4000/${image}`;
               }
               
               return( <img className="rounded-3xl w-28" key={index} src={imageUrlObject} alt="" />
