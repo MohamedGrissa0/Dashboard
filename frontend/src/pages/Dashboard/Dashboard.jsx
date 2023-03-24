@@ -10,7 +10,9 @@ import ReviewsIcon from '@mui/icons-material/Reviews';
 export default function Dashboard() {
     const [toggleMenu,setToggleMenu]=useState(false)
     const [toggleSetting,setToggleSetting]=useState(false)
-    const [Users,setUsers]=useState()
+    const [Users,setUsers]=useState([])
+    const [allUsers,setallUsers]=useState([])
+
     const [Posts,setPosts]=useState()
     const [Reviews,setReviews]=useState()
 
@@ -20,7 +22,8 @@ export default function Dashboard() {
         .get(`http://localhost:4000/api/users/`)
         .then((response) => {
           setUsers(response.data.length);
-          console.log(response.data.length) // Update the users array with the response data from the Axios request
+          setallUsers(response.data)
+          console.log(response.data) // Update the users array with the response data from the Axios request
           // Use the "users" variable in maps or any other operations
         })
         .catch((error) => {
@@ -51,6 +54,13 @@ export default function Dashboard() {
           console.log(error);
         });
     }, []);
+    const lastFive = [];
+    for (let i = allUsers.length - 5; i < allUsers.length; i++) {
+      if (i >= 0) {
+        lastFive.push(allUsers[i]);
+      }
+    }
+    
   return (
     <div>
          
@@ -100,9 +110,26 @@ export default function Dashboard() {
 </section>
 
 
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-      </div>
+<div className="flex flex-col items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+  <p className="text-2xl text-gray-400 dark:text-gray-500 font-bold mb-2">Last 5 Users</p>
+  <table className="min-w-max w-full table-auto">
+    <thead>
+      <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <th className="py-3 px-6 text-left">Username</th>
+        <th className="py-3 px-6 text-left">Email</th>
+      </tr>
+    </thead>
+    <tbody className="text-gray-600 text-sm font-light">
+      {lastFive.map((item) => (
+        <tr key={item.username}>
+          <td className="py-3 px-6 text-left whitespace-nowrap">{item.username}</td>
+          <td className="py-3 px-6 text-left whitespace-nowrap">{item.email}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
       <div class="grid grid-cols-2 gap-4 mb-4">
          <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
             <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>

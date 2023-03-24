@@ -126,6 +126,22 @@ router.get('/', async (req, res) => {
     }
 })
 
+// Fetch reviews created in the last 24 hours
+router.get('/', async (req, res) => {
+  try {
+    const now = new Date();
+    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+
+    const reviews = await Review.find({ createdAt: { $gte: twentyFourHoursAgo } });
+
+    res.json(reviews);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error fetching reviews' });
+  }
+});
+
+
 
 
 
