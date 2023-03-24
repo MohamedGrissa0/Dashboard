@@ -90,9 +90,7 @@ console.log(formValues)
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr >
-          <th scope="col" class="p-4">
-           
-          </th>
+         
           <th scope="col" class="px-6 py-3">
            
           <span class=" flex justify-center">Title</span>  
@@ -126,9 +124,7 @@ console.log(formValues)
           data.reverse().map(d=>(
             <tr
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <td class="w-4 p-4">
-              
-            </td>
+           
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
              <span className=' flex justify-center '>{d.title}</span>
             </th>

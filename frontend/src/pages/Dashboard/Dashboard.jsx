@@ -132,8 +132,8 @@ export default function Dashboard() {
 </section>
 
 
-<div className="flex flex-col items-center justify-center my-4 py-6 rounded bg-gray-50 dark:bg-gray-800">
-  <p className="text-3xl font-bold mb-2 text-gray-700 px-4 sm:px-6 lg:px-8">Last 5 Users</p>
+<div className="p-4 border-2 border-gray-200 border-dashed rounded-lg  mt-14">
+  <p className="text-2xl font-bold text-center mb-2 text-gray-400 dark:text-gray-500">Latest 5 Users</p>
   <div className="w-full overflow-x-scroll">
     <table className="table-auto w-full">
       <thead>
@@ -157,8 +157,8 @@ export default function Dashboard() {
 
 
 
-<div className="flex flex-col items-center justify-center my-4 py-6 rounded bg-gray-50 dark:bg-gray-800">
-  <p className="text-2xl font-bold mb-2 text-gray-400 dark:text-gray-500">Last 5 Posts</p>
+<div className="p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14 overflow-x-auto">
+  <p className="text-2xl font-bold mb-2 text-gray-400 text-center dark:text-gray-500">Latest 5 Posts</p>
   <table className="min-w-max w-full table-auto">
     <thead>
       <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -177,8 +177,9 @@ export default function Dashboard() {
   </table>
 </div>
 
-<div className="flex flex-col items-center justify-center my-4 py-6 rounded bg-gray-50 dark:bg-gray-800">
-  <p className="text-2xl font-bold mb-2 text-gray-400 dark:text-gray-500">Last 5 Reviews</p>
+
+<div className="p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14 overflow-x-auto">
+  <p className="text-2xl font-bold mb-2 text-gray-400 text-center dark:text-gray-500">Latest 5 Reviews</p>
   <table className="min-w-max w-full table-auto">
     <thead>
       <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -187,8 +188,8 @@ export default function Dashboard() {
       </tr>
     </thead>
     <tbody className="text-gray-600 text-sm font-light">
-      {lastFiver.map((item) => (
-        <tr key={item.username} className="bg-white hover:bg-gray-100 transition-colors duration-200">
+      {lastFivep.map((item) => (
+        <tr key={item.title} className="bg-white hover:bg-gray-100 transition-colors duration-200">
           <td className="py-3 px-6 text-left whitespace-nowrap">{item.username}</td>
           <td className="py-3 px-6 text-left whitespace-nowrap">{item.comments}</td>
         </tr>
@@ -198,8 +199,9 @@ export default function Dashboard() {
 </div>
 
 
+
     
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+      <div class="flex items-center justify-center h-48 my-4 rounded bg-gray-50 dark:bg-gray-800">
          <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
       </div>
       <div class="grid grid-cols-2 gap-4">
