@@ -103,7 +103,7 @@ console.log(formValues)
           </th>
           <th scope="col" class="px-6 mx-auto    py-3">
            
-          <span class=" flex justify-center">Description</span>  
+          <span class=" flex justify-center">Category</span>  
           </th>
           <th scope="col" class="px-6 py-3">
            
@@ -123,7 +123,7 @@ console.log(formValues)
       </thead>
       <tbody>
         {
-          data.map(d=>(
+          data.reverse().map(d=>(
             <tr
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <td class="w-4 p-4">
@@ -138,7 +138,7 @@ console.log(formValues)
             </td>
             <td class="px-6 py-4">
               
-            <span className=' flex justify-center '>{d.description}</span>   
+            <span className=' flex justify-center '>{d.category}</span>   
             </td>
             <td class="px-6 py-4">
               

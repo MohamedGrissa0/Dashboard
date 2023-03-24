@@ -21,7 +21,7 @@ export default function Review() {
 
   return (
     <div className=" mt-[90px] container mx-auto grid grid-cols-1 md:grid-cols-4 gap-6">
-    {Reviews  .map((review) => (
+    {Reviews.reverse().map((review) => (
         <ReviewCard
           place = {review.username} 
           review={review.comments}
