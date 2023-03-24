@@ -13,8 +13,12 @@ export default function Dashboard() {
     const [Users,setUsers]=useState([])
     const [allUsers,setallUsers]=useState([])
 
-    const [Posts,setPosts]=useState()
-    const [Reviews,setReviews]=useState()
+    const [Posts,setPosts]=useState([])
+    const [allPosts,setallPosts]=useState([])
+
+    const [Reviews,setReviews]=useState([])
+    const [allReviews,setallReviews]=useState([])
+
 
 
     useEffect(() => {
@@ -34,8 +38,12 @@ export default function Dashboard() {
       axios
         .get(`http://localhost:4000/api/places/`)
         .then((response) => {
+         console.log(response.data)
          setPosts(response.data.length);
-          console.log(response.data.length) // Update the users array with the response data from the Axios request
+         setallPosts(response.data)
+         
+
+           // Update the users array with the response data from the Axios request
           // Use the "users" variable in maps or any other operations
         })
         .catch((error) => {
@@ -47,6 +55,8 @@ export default function Dashboard() {
         .get(`http://localhost:4000/api/reviews/`)
         .then((response) => {
          setReviews(response.data.length);
+         setallReviews(response.data)
+
           console.log(response.data.length) // Update the users array with the response data from the Axios request
           // Use the "users" variable in maps or any other operations
         })
@@ -60,6 +70,18 @@ export default function Dashboard() {
         lastFive.push(allUsers[i]);
       }
     }
+    const lastFivep = [];
+    for (let i = allPosts.length - 5; i < allPosts.length; i++) {
+      if (i >= 0) {
+        lastFivep.push(allPosts[i]);
+      }
+    }
+    const lastFiver = [];
+    for (let i = allReviews.length - 5; i < allReviews.length; i++) {
+      if (i >= 0) {
+        lastFivep.push(allReviews[i]);
+      }
+    }
     
   return (
     <div>
@@ -67,7 +89,7 @@ export default function Dashboard() {
 
 
 <div class="p-4 ">
-   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg  mt-14">
    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
    <div class="statistic-card bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
   <div class="statistic-header flex justify-between items-center px-6 py-4 border-b border-gray-200 dark:border-gray-700">
@@ -110,40 +132,73 @@ export default function Dashboard() {
 </section>
 
 
-<div className="flex flex-col items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-  <p className="text-2xl text-gray-400 dark:text-gray-500 font-bold mb-2">Last 5 Users</p>
+<div className="flex flex-col items-center justify-center my-4 py-6 rounded bg-gray-50 dark:bg-gray-800">
+  <p className="text-3xl font-bold mb-2 text-gray-700 px-4 sm:px-6 lg:px-8">Last 5 Users</p>
+  <div className="w-full overflow-x-scroll">
+    <table className="table-auto w-full">
+      <thead>
+        <tr className="bg-gray-200 text-gray-700 uppercase text-sm font-medium">
+          <th className="py-4 px-4 sm:px-6 lg:px-8 text-left">Username</th>
+          <th className="py-4 px-4 sm:px-6 lg:px-8 text-left">Email</th>
+        </tr>
+      </thead>
+      <tbody className="text-gray-800 text-sm font-medium">
+        {lastFive.map((item, index) => (
+          <tr key={item.username} className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-gray-200 transition-colors duration-200`}>
+            <td className="py-4 px-4 sm:px-6 lg:px-8 text-left">{item.username}</td>
+            <td className="py-4 px-4 sm:px-6 lg:px-8 text-left">{item.email}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+<div className="flex flex-col items-center justify-center my-4 py-6 rounded bg-gray-50 dark:bg-gray-800">
+  <p className="text-2xl font-bold mb-2 text-gray-400 dark:text-gray-500">Last 5 Posts</p>
   <table className="min-w-max w-full table-auto">
     <thead>
       <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-        <th className="py-3 px-6 text-left">Username</th>
-        <th className="py-3 px-6 text-left">Email</th>
+        <th className="py-3 px-6 text-left">Title</th>
+        <th className="py-3 px-6 text-left">Category</th>
       </tr>
     </thead>
     <tbody className="text-gray-600 text-sm font-light">
-      {lastFive.map((item) => (
-        <tr key={item.username}>
-          <td className="py-3 px-6 text-left whitespace-nowrap">{item.username}</td>
-          <td className="py-3 px-6 text-left whitespace-nowrap">{item.email}</td>
+      {lastFivep.map((item) => (
+        <tr key={item.title} className="bg-white hover:bg-gray-100 transition-colors duration-200">
+          <td className="py-3 px-6 text-left whitespace-nowrap">{item.title}</td>
+          <td className="py-3 px-6 text-left whitespace-nowrap">{item.category}</td>
         </tr>
       ))}
     </tbody>
   </table>
 </div>
 
-      <div class="grid grid-cols-2 gap-4 mb-4">
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-         </div>
-      </div>
+<div className="flex flex-col items-center justify-center my-4 py-6 rounded bg-gray-50 dark:bg-gray-800">
+  <p className="text-2xl font-bold mb-2 text-gray-400 dark:text-gray-500">Last 5 Reviews</p>
+  <table className="min-w-max w-full table-auto">
+    <thead>
+      <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <th className="py-3 px-6 text-left">Username</th>
+        <th className="py-3 px-6 text-left">Comment</th>
+      </tr>
+    </thead>
+    <tbody className="text-gray-600 text-sm font-light">
+      {lastFiver.map((item) => (
+        <tr key={item.username} className="bg-white hover:bg-gray-100 transition-colors duration-200">
+          <td className="py-3 px-6 text-left whitespace-nowrap">{item.username}</td>
+          <td className="py-3 px-6 text-left whitespace-nowrap">{item.comments}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+
+    
       <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
          <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
       </div>
