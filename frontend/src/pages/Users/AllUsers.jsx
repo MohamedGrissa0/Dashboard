@@ -154,7 +154,7 @@ export default function Allusers() {
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
             <img
                     src={item.avatar}
-                    alt=""
+                    alt="Doesnot have"
                     className="profile-pic rounded-full w-12 h-12 md:w-16 md:h-16 block md:flex items-center justify-center"
                   />            </th>
             <td class="px-6 py-4">
