@@ -126,7 +126,8 @@ console.log(formValues)
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
            
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-             <span className=' flex justify-center '>{d.title}</span>
+     
+    <span className=' flex justify-center '>{d.title}</span>
             </th>
             <td class="px-6 py-4">
             <span className=' flex justify-center '><a className='text-blue-600 font-semibold' target='_blank' href={d.location}>View Location</a></span>   
@@ -230,7 +231,7 @@ console.log(formValues)
                       </div>
                     </div>
                   </div>
-                  <div>
+                  <div className='flex'>
                   {formValues.images &&
             Array.from(formValues.images).map((image, index) => {
               let imageUrlObject 
@@ -242,7 +243,7 @@ console.log(formValues)
                    imageUrlObject=  `http://localhost:4000/${image}`;
               }
               
-              return( <img className="rounded-3xl w-28" key={index} src={imageUrlObject} alt="" />
+              return( <img className="rounded-3xl  w-28" key={index} src={imageUrlObject} alt="" />
            )
                   })} </div>
                   
