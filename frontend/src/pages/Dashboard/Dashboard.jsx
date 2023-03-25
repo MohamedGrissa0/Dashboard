@@ -18,6 +18,9 @@ export default function Dashboard() {
 
     const [Reviews,setReviews]=useState([])
     const [allReviews,setallReviews]=useState([])
+    const [sortedReviewsData, setSortedReviewsData] = useState([]);
+
+
 
 
 
@@ -27,7 +30,7 @@ export default function Dashboard() {
         .then((response) => {
           setUsers(response.data.length);
           setallUsers(response.data)
-          console.log(response.data) // Update the users array with the response data from the Axios request
+          //console.log(response.data) // Update the users array with the response data from the Axios request
           // Use the "users" variable in maps or any other operations
         })
         .catch((error) => {
@@ -38,10 +41,9 @@ export default function Dashboard() {
       axios
         .get(`http://localhost:4000/api/places/`)
         .then((response) => {
-         console.log(response.data)
          setPosts(response.data.length);
          setallPosts(response.data)
-         
+
 
            // Update the users array with the response data from the Axios request
           // Use the "users" variable in maps or any other operations
@@ -57,7 +59,9 @@ export default function Dashboard() {
          setReviews(response.data.length);
          setallReviews(response.data)
 
-          console.log(response.data.length) // Update the users array with the response data from the Axios request
+          console.log(response.data.length)
+          console.log(response.data) // Update the users array with the response data from the Axios request
+          // Update the users array with the response data from the Axios request
           // Use the "users" variable in maps or any other operations
         })
         .catch((error) => {
@@ -82,10 +86,23 @@ export default function Dashboard() {
         lastFivep.push(allReviews[i]);
       }
     }
-    
+
+   const MostReviewed =allPosts.sort((a, b) => b.REVIEWS.length - a.REVIEWS.length);
+   console.log(MostReviewed)
+
+   const fivemostreviewed  = MostReviewed.slice(0, 5);
+
+  
+
+   
+
+
+
+
+
   return (
     <div>
-         
+
 
 
 <div class="p-4 ">
@@ -133,7 +150,7 @@ export default function Dashboard() {
 
 
 <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg  mt-14">
-  <p className="text-2xl font-bold text-center mb-2 text-gray-400 dark:text-gray-500">Latest 5 Users</p>
+  <p className="text-2xl font-bold text-center mb-2 text-gray-400 dark:text-gray-500">Recent Users</p>
   <div className="w-full overflow-x-scroll">
     <table className="table-auto w-full">
       <thead>
@@ -158,7 +175,7 @@ export default function Dashboard() {
 
 
 <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14 overflow-x-auto">
-  <p className="text-2xl font-bold mb-2 text-gray-400 text-center dark:text-gray-500">Latest 5 Posts</p>
+  <p className="text-2xl font-bold mb-2 text-gray-400 text-center dark:text-gray-500">Recent Posts</p>
   <table className="min-w-max w-full table-auto">
     <thead>
       <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -179,7 +196,7 @@ export default function Dashboard() {
 
 
 <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14 overflow-x-auto">
-  <p className="text-2xl font-bold mb-2 text-gray-400 text-center dark:text-gray-500">Latest 5 Reviews</p>
+  <p className="text-2xl font-bold mb-2 text-gray-400 text-center dark:text-gray-500">Recent Reviews</p>
   <table className="min-w-max w-full table-auto">
     <thead>
       <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -188,7 +205,7 @@ export default function Dashboard() {
       </tr>
     </thead>
     <tbody className="text-gray-600 text-sm font-light">
-      {lastFivep.map((item) => (
+      {lastFiver.map((item) => (
         <tr key={item.title} className="bg-white hover:bg-gray-100 transition-colors duration-200">
           <td className="py-3 px-6 text-left whitespace-nowrap">{item.username}</td>
           <td className="py-3 px-6 text-left whitespace-nowrap">{item.comments}</td>
@@ -198,15 +215,33 @@ export default function Dashboard() {
   </table>
 </div>
 
+<div className="p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14 overflow-x-auto">
+  <p className="text-2xl font-bold mb-2 text-gray-400 text-center dark:text-gray-500">Most Reviewd</p>
+  <table className="min-w-max w-full table-auto">
+    <thead>
+      <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        <th className="py-3 px-6 text-left">Title</th>
+        <th className="py-3 px-6 text-left">Reviews</th>
+      </tr>
+    </thead>
+    <tbody className="text-gray-600 text-sm font-light">
+      {fivemostreviewed.map((item) => (
+        <tr key={item.title} className="bg-white hover:bg-gray-100 transition-colors duration-200">
+          <td className="py-3 px-6 text-left whitespace-nowrap">{item.title}</td>
+          <td className="py-3 px-6 text-left whitespace-nowrap">{item.REVIEWS.length}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
 
 
     
-      <div class="flex items-center justify-center h-48 my-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-      </div>
       <div class="grid grid-cols-2 gap-4">
          <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
+            <p class="text-2xl text-gray-400 dark:text-gray-500"><div>
+     
+    </div></p>
          </div>
          <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
             <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>

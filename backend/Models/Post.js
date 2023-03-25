@@ -24,7 +24,7 @@ const PostSchema = new mongoose.Schema(
         },
         REVIEWS : 
         {
-            type : Number ,
+            type :[String],
          
         },
         category : 
