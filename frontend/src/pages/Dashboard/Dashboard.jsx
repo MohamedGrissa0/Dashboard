@@ -87,7 +87,7 @@ export default function Dashboard() {
       }
     }
 
-   const MostReviewed =allPosts.sort((a, b) => b.REVIEWS.length - a.REVIEWS.length);
+   const MostReviewed =allPosts.sort((a, b) => b.REVNB - a.REVNB);
    console.log(MostReviewed)
 
    const fivemostreviewed  = MostReviewed.slice(0, 5);
@@ -228,7 +228,7 @@ export default function Dashboard() {
       {fivemostreviewed.map((item) => (
         <tr key={item.title} className="bg-white hover:bg-gray-100 transition-colors duration-200">
           <td className="py-3 px-6 text-left whitespace-nowrap">{item.title}</td>
-          <td className="py-3 px-6 text-left whitespace-nowrap">{item.REVIEWS.length}</td>
+          <td className="py-3 px-6 text-left whitespace-nowrap">{item.REVNB}</td>
         </tr>
       ))}
     </tbody>

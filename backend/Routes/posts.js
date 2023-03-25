@@ -121,7 +121,7 @@ router.delete("/place/delete/:id",async(req,res)=>{
 router.get("/search" , async (req,res) => {
     try {
         const q = req.query.q
-        const searchres = Post.find({title: "grissa"})
+        const searchres = Post.find({title: q})
         res.status(200).send({title : "grissa" , description : "fnnfzkfbezfbezbfezbfibezfezbfbzefbzefuibezfbuezbfiezbfubezfbiazbfzbe" , images:"https://images.pexels.com/photos/12509875/pexels-photo-12509875.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" , review: 50 , reviewNB : 4.5 })
   console.log({title : "grissa" , 
   description : "fnnfzkfbezfbezbfezbfibezfezbfbzefbzefuibezfbuezbfiezbfubezfbiazbfzbe" ,
