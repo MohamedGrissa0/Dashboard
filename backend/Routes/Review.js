@@ -20,18 +20,35 @@ router.get("/:id" , async (req,res) => {
    }
 } )
 
-router.post('/', async (req, res) => {
-
-    const NewRevieww = new Review(req.body)
+router.post('/:postId', async (req, res) => {
+    console.log(req.params.postId);
+  
+    const newReview = new Review({
+      personId: req.body.personId,
+      username: req.body.username,
+      post: req.params.postId,
+      rate: req.body.rate,
+      comments: req.body.comments,
+    });
     try {
-
-        const savedReview = await NewRevieww.save()
-        res.status(200).json(savedReview)
-        
+      const review = await newReview.save();
+      const post = await Post.findById(req.params.postId);
+  
+      if (!post) {
+        console.error("Post not found!");
+        res.status(404).send("Post not found!");
+      } else {
+        post.REVIEWS.push(review);
+        const updatedPost = await post.save();
+        res.send(updatedPost);
+        console.log("Review saved successfully!");
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Server error");
     }
-    catch (err) {
-        res.status(500).json(err)
-    }
+  });
+    
    
     
 
