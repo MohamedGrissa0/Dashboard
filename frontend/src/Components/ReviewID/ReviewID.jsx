@@ -7,10 +7,12 @@ export default function ReviewID() {
     const [data, setData] = useState([{}])
     const [loading, setloading] = useState(true)
     const {id}=useParams()
-console.log(data) 
+    console.log(data) 
     useEffect(async() => {
       await  axios.get("http://localhost:4000/api/reviews/"+id).then(res=>{
             setData(res.data)
+            console.log(res.data) 
+
             setloading(false)
           }).catch(e=>{
             setloading(false)
