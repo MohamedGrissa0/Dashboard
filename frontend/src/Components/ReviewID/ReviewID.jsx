@@ -9,7 +9,7 @@ export default function ReviewID() {
     const {id}=useParams()
 console.log(data) 
     useEffect(async() => {
-      await  axios.get("http://localhost:4000/api/reviews/"+id).then(res=>{
+        axios.get("http://localhost:4000/api/reviews/"+id).then(res=>{
             setData(res.data)
             setloading(false)
           }).catch(e=>{

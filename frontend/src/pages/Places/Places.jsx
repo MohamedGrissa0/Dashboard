@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import axios from'axios';
 import CloseIcon from '@mui/icons-material/Close';
 export default function Places() {
+  
   const [data, setData] = useState([])
   
   const [isClick, setisClick] = useState(false);
@@ -139,7 +140,7 @@ console.log(formValues)
             </td>
             <td class="px-6 py-4">
               
-            <span className=' flex justify-center '>{d.REVIEWS}</span>   
+            <span className=' flex justify-center '>{d.REVIEWS.length}</span>   
             </td>
             <td class="px-6 py-4 text-right">
             <a href={"/reviews/"+d._id} class="font-medium flex justify-center  text-blue-600 dark:text-blue-500 hover:underline">View</a>

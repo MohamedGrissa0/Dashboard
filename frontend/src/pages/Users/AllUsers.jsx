@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useEffect , use } from 'react';
 import axios from'axios';
-import md5 from "md5"
+
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Allusers() {
@@ -55,7 +55,7 @@ export default function Allusers() {
                     id: ID._id, // add user id
                     username: formValues.username?formValues.username:ID.username,
                     email: formValues.email?formValues.email:ID.email,
-                    password: formValues.password?md5(formValues.password):ID.password,
+                    password: formValues.password?formValues.password:ID.password,
                 });
                 console.log(`Updated successfully.`);
                 setUpdateisDone(true); // fix camelCase
