@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function Review() {
     const [formValues, setFormValues] = useState({
         comments:  "",
-        Rate: "",
+        rate: "",
       });
       const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -35,7 +35,7 @@ export default function Review() {
             try {
               await axios.put(`http://localhost:4000/api/reviews/${ID._id}`, {
                 comments: formValues.comments ? formValues.comments : ID.comments,
-                Rate: formValues.Rate ? formValues.Rate : ID.Rate, // fix camelCase
+                rate: formValues.rate ? formValues.rate : ID.rate, // fix camelCase
               });
               console.log(`Updated successfully.`);
               setUpdateisDone(true); // fix camelCase
@@ -137,11 +137,11 @@ export default function Review() {
             <td class="px-6 py-4">
               
               <span className=' flex justify-center'                   style={{ wordWrap: "break-word" }}
-  >{item.Rate}</span>   
+  >{item.rate}</span>   
               </td>
             
             
-            <td class="px-6 py-4  self-center flex justify-center text-right">
+            <td class="px-6 py-4    self-center flex justify-center text-right">
            
             <button
                   className="update-btn flex justify-center items-center"
@@ -187,7 +187,7 @@ export default function Review() {
         <i className="fas fa-envelope mr-2 text-blue-500"></i>
         <span className="">Rate :</span>
       </label>
-      <input type="text" id="Rate" name="Rate" onChange={handleInputChange} value={formValues.Rate?formValues.Rate:ID.Rate} placeholder="Enter your Rate" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
+      <input type="text" id="rate" name="rate" onChange={handleInputChange} value={formValues.rate?formValues.rate:ID.rate} placeholder="Enter your Rate" className="block w-full border-2 border-gray-400 rounded-lg bg-transparent text-gray-700 py-2 px-4 md:py-3 md:px-5 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" required />
     </div>
   </div>
   
