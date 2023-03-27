@@ -1,12 +1,15 @@
 const router = require("express").Router()
 const Person = require("../Models/Person");
 const Review = require("../Models/Reviews");
+const Post = require("../Models/Post");
+
 
 
 router.get("/:id" , async (req,res) => {
     const id=req.params.id
     
     try {
+      
        
              
        const review=await Review.find({postId : id})
@@ -60,20 +63,23 @@ router.post('/:postId', async (req, res) => {
 
 
 //Update Review
-router.put('/:id', async (req, res) => { // add review ID parameter to URL
-    try {
-      const updatedReview = await Review.findByIdAndUpdate(req.params.id, { // use params to get review ID
-        $set: {
-          comments: req.body.comments,
-          Rate: req.body.Rate, // fix camelCase
-        },
-      }, { new: true });
-      res.status(200).json(updatedReview);
-    } catch (err) {
-      console.error(`Error updating review: ${err}`); // fix spacing and capitalization
-      res.status(500).json(err);
-    }
-  });
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedReview = await Review.findByIdAndUpdate(req.params.id, {
+      $set: {
+        comments: req.body.comments,
+        rate: req.body.rate,
+      },
+    }, { new: true });
+
+
+    res.status(200).json(updatedReview);
+  } catch (err) {
+    console.error(`Error updating review: ${err}`);
+    res.status(500).json(err);
+  }
+});
+
   
 
 //Delete Review
