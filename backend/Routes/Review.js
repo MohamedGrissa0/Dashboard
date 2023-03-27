@@ -12,7 +12,7 @@ router.get("/:id" , async (req,res) => {
       
        
              
-       const review=await Review.find({postId : id})
+       const review=await Review.find({post : id})
      res.status(200).send(review)
    
 
