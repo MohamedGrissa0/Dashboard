@@ -222,7 +222,7 @@ console.log(formValues)
                         <div class="flex text-sm text-gray-600">
                           <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-gray-600 hover:text-gray-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-gray-500" >
                             <span class="p-[10px] ">Upload a file</span>
-                            <input id="file-upload" multiple  onChange={handleImageUpload}  name="file-upload" type="file" class="sr-only" />
+                            <input id="file-upload" multiple  onChange={handleImageUpload} onClick={()=>{if(formValues.images.length===3){  setFormValues({ ...formValues, images: [] })}}}  name="file-upload" type="file" class="sr-only" />
                           </label>
                           <p class="pl-1 text-white">or drag and drop</p>
                         </div>

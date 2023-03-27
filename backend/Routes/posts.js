@@ -22,7 +22,8 @@ const storage = multer.diskStorage({
   
 router.post("/edit/:id" , upload.array("images"), async (req,res) => {
         const id = req.params.id   
-        console.log(req.params.id)  
+        console.log( req.files.length)  
+       
      try {
         
      
@@ -33,10 +34,11 @@ router.post("/edit/:id" , upload.array("images"), async (req,res) => {
          post.location = req.body.location;
          post.category = req.body.category;
          post.description = req.body.description;
-    if (req.files) {
+    if (req.files.length>0) {
       post.images = req.files.map((file) => file.path);
     }
-
+    
+    
     const updatedPost = await post.save();
     res.status(200).json({ message: "Post updated", post: updatedPost });
    
