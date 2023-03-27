@@ -23,7 +23,7 @@ export default function ReviewID() {
     const [data, setData] = useState([{}])
     const [loading, setloading] = useState(true)
     const {id}=useParams()
-console.log(data) 
+console.log(data) ;     console.log(ID)
     useEffect(async() => {
       await  axios.get("http://localhost:4000/api/reviews/"+id).then(res=>{
             setData(res.data)
@@ -35,6 +35,7 @@ console.log(data)
     }, [])
     const handleUpdate = async (e) => {
         e.preventDefault();
+   
         try {
           await axios.put(`http://localhost:4000/api/reviews/${ID._id}`, {
             comments: formValues.comments ? formValues.comments : ID.comments,
