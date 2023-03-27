@@ -49,10 +49,10 @@ export default function Review() {
             console.log(item);
             try {
                 await axios.delete(`http://localhost:4000/api/reviews/`, { data: { id: item._id } });
-                console.log(`User with ID ${item._id} deleted successfully.`);
+                console.log(`Review with ID ${item._id} deleted successfully.`);
                 setisDone(true)
             } catch (error) {
-                console.error(`Error deleting user with ID ${item._id}: ${error}`);
+                console.error(`Error deleting Review with ID ${item._id}: ${error}`);
             }
             window.location.reload()
         };
