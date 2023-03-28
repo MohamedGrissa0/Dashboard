@@ -32,6 +32,7 @@ router.post("/edit/:id" , upload.array("images"), async (req,res) => {
      if(post){
          post.title = req.body.title;
          post.location = req.body.location;
+         post.locationString = req.body.locationString;
          post.category = req.body.category;
          post.description = req.body.description;
     if (req.files.length>0) {
@@ -87,6 +88,7 @@ router.post("/form", upload.array("images"),async(req,res)=>{
             title: req.body.title,
             location: req.body.location,
             category: req.body.category,
+            locationString: req.body.locationString,
             description: req.body.description,
             images: req.files.map(file => file.path)
           });

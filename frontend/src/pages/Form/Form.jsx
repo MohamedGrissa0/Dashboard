@@ -6,6 +6,7 @@ export default function Form() {
     const [formValues, setFormValues] = useState({
       title:  "",
       location: "",
+      locationString: "",
       category: "",
       description: "",
       images:[]
@@ -37,7 +38,7 @@ export default function Form() {
       formData.append('location', formValues.location);
       formData.append('category', formValues.category);
       formData.append('description', formValues.description);
-    
+      formData.append('locationString', formValues.locationString);
       for (let i = 0; i < formValues.images.length; i++) {
         formData.append('images', formValues.images[i]);
       }
@@ -72,7 +73,10 @@ export default function Form() {
                 <input value={formValues.title}   onChange={handleInputChange} id="Title" required name="title" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"/>
             </div>
 
-          
+            <div>
+                <label class="text-white dark:text-gray-200" for="Title">locationString</label>
+                <input value={formValues.locationString}   onChange={handleInputChange} id="locationString" required name="locationString" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"/>
+            </div>
 
            
 

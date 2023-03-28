@@ -21,6 +21,10 @@ const PostSchema = new mongoose.Schema(
         {
             type : String ,
          
+        },locationString : 
+        {
+            type : String ,
+         
         },
         REVIEWS : 
         {

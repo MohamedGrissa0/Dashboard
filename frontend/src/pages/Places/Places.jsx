@@ -11,6 +11,7 @@ export default function Places() {
   const [formValues, setFormValues] = useState({
     title:       '',
     location:    '',
+    locationString:    '',
     category:   '',
     description: '',
     images:     []
@@ -53,7 +54,8 @@ console.log(formValues)
     formData.append('location', formValues.location);
     formData.append('category', formValues.category);
     formData.append('description', formValues.description);
-  
+    formData.append('locationString', formValues.locationString);
+    
     for (let i = 0; i < formValues.images.length; i++) {
       formData.append('images', formValues.images[i]);
     }
@@ -184,7 +186,11 @@ console.log(formValues)
                       <input id="Title" required name="title" type="text"value={formValues.title?formValues.title:id.title}   onChange={handleInputChange} class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"></input>
                   </div>
       
-                
+                  <div>
+                      <label class="text-white dark:text-gray-200" for="Title">locationString</label> 
+          
+                      <input id="locationString" required name="locationString" type="text"value={formValues.locationString?formValues.locationString:id.locationString}   onChange={handleInputChange} class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-gray-500 dark:focus:border-gray-500 focus:outline-none focus:ring"></input>
+                  </div>
       
                  
       
@@ -247,13 +253,13 @@ console.log(formValues)
               return( <img className="rounded-3xl  w-28" key={index} src={imageUrlObject} alt="" />
            )
                   })} </div>
-                  
-                 
-              </div>
-      
+                        
               <div class="flex justify-center mt-6">
                   <button  class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-600">Save</button>
               </div>
+                 
+              </div>
+
           </form>
       </section>
       
