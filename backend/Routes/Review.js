@@ -1,6 +1,5 @@
 const router = require("express").Router()
 const Person = require("../Models/Person");
-const Review = require("../Models/Reviews");
 const Post = require("../Models/Post");
 
 
@@ -9,10 +8,9 @@ router.get("/:id" , async (req,res) => {
     const id=req.params.id
     
     try {
-      
        
              
-       const review=await Review.find({post : id})
+       const review=await Post.find()
      res.status(200).send(review)
    
 
@@ -24,145 +22,119 @@ router.get("/:id" , async (req,res) => {
 } )
 
 router.post('/:postId', async (req, res) => {
-    console.log(req.params.postId);
-  
-    const newReview = new Review({
-      personId: req.body.personId,
-      username: req.body.username,
-      post: req.params.postId,
-      rate: req.body.rate,
-      comments: req.body.comments,
-    });
-    try {
-      const review = await newReview.save();
-      const post = await Post.findById(req.params.postId);
-  
-      if (!post) {
-        console.error("Post not found!");
-        res.status(404).send("Post not found!");
-      } else {
-        post.REVIEWS.push(review);
-        const updatedPost = await post.save();
-        res.send(updatedPost);
-        console.log("Review saved successfully!");
-      }
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Server error");
-    }
-  });
-    
-   
-    
+  console.log(req.params.postId);
+  console.log(req.body.rate);
+  console.log(req.body.username);
+  console.log(req.body.comments);
 
+
+
+  try {
+    const post = await Post.findOne({_id: req.params.postId});
+
+    if (!post) {
+      console.error('Post not found!');
+      res.status(404).send('Post not found!');
+    } 
+
+      post.REVIEWS.push({
+        personId: req.body.personId,
+        username: req.body.username,
+        rate: req.body.rate,
+        comments: req.body.comments,
+      });
+
+      const updatedPost = await post.save();
+      res.send(updatedPost);
+      console.log(updatedPost)
+      console.log('Review saved successfully!');
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
 
 
 //INSERT MANY 
 
 
+//UPDATE REVIEW
 
-
-//Update Review
 router.put('/:id', async (req, res) => {
   try {
-    const updatedReview = await Review.findByIdAndUpdate(req.params.id, {
-      $set: {
-        comments: req.body.comments,
-        rate: req.body.rate,
-      },
-    }, { new: true });
+    const post = await Post.findOne({ 'REVIEWS._id': req.params.id });
+    if (!post) {
+      throw new Error('Post not found');
+    }
 
+    const reviewIndex = post.REVIEWS.findIndex(review => review._id == req.params.id);
+    if (reviewIndex === -1) {
+      throw new Error('Review not found');
+    }
 
-    res.status(200).json(updatedReview);
+    post.REVIEWS[reviewIndex].comments = req.body.comments;
+    post.REVIEWS[reviewIndex].rate = req.body.rate;
+    const updatedPost = await post.save();
+    res.status(200).json(updatedPost.REVIEWS);
   } catch (err) {
     console.error(`Error updating review: ${err}`);
-    res.status(500).json(err);
+    throw new Error('Error updating review');
+  }
+});
+
+
+
+
+
+
+//GET ALL Reviews
+router.get('/', async (req, res) => {
+  try {
+    const posts = await Post.find({});
+    let allReviews = [];
+    posts.forEach(post => {
+      allReviews.push(...post.REVIEWS);
+    });
+    res.json(allReviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
   
 
 //Delete Review
-router.delete('/', async (req, res) => {
-    try {
-        const review = await Review.findById(req.body.id);
 
-        if (!review) {
-            return res.status(404).json({ message: "Review not found" });
-        }
-
-       
-
-        try {
-            await Review.findByIdAndDelete(review._id);
-
-            res.status(200).json({ message: "User has been deleted" });
-        } catch (err) {
-            res.status(500).json({ message: "Something went wrong" });
-        }
-    } catch (err) {
-        res.status(500).json({ message: "Something went wrong" });
-    }
-});
-//DELETE ALL REVIEWS
-router.delete('/',async(req,res)=> {
-    try{
-        let reviews = await Review.deleteMany()
-        res.status(200).json(reviews)
-        }
-
-    
-    catch (err) {
-        res.status(500).json(err)
-    }
-})
-
-
-//GET ALL Reviews
-router.get('/', async (req, res) => {
-    const username = req.query.user
-    const catName = req.query.cat
-    /*try {
-        let reviews;
-        if (username) {
-            reviews = await Review.find({data : { username }});
-        }
-        else if (catName) {
-            posts = await Post.find({
-                categories: {
-                    $in: [catName],
-
-                }
-            })
-        }
-        else {
-            posts = await Post.find()
-        }*/
-        try{
-        let reviews = await Review.find()
-        res.status(200).json(reviews)
-        }
-
-    
-    catch (err) {
-        res.status(500).json(err)
-    }
-})
-
-// Fetch reviews created in the last 24 hours
-router.get('/', async (req, res) => {
+router.delete('/:id', async (req, res ) => {
+  console.log(req.params.id)
   try {
-    const now = new Date();
-    const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    const post = await Post.findOne({ 'REVIEWS._id': req.params.id });
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
 
-    const reviews = await Review.find({ createdAt: { $gte: twentyFourHoursAgo } });
-
-    res.json(reviews);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error fetching reviews' });
+    const reviewIndex = post.REVIEWS.findIndex(review => review._id == req.params.id);
+    if (reviewIndex === -1) {
+      return res.status(404).json({ message: 'Review not found' });
+    }
+    
+    post.REVIEWS.splice(reviewIndex, 1);
+    const updatedPost = await post.save();
+    res.status(200).json(updatedPost.REVIEWS);
+    
+  } catch (err) {
+    console.error(`Error deleting review with ID ${req.params.id}: ${err}`);
+    next(err);
   }
 });
+
+
+
+
+
+
 
 
 

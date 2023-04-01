@@ -21,16 +21,27 @@ const PostSchema = new mongoose.Schema(
         {
             type : String ,
          
-        },locationString : 
+        },
+       locationString : 
         {
             type : String ,
          
         },
+        
         REVIEWS : 
-        {
-            type : Array ,
-         
-        },
+        [{ personId: {
+            type:String
+          },
+          username: {
+            type: String,
+          },
+          rate: {
+            type: Number,
+          },
+          comments: {
+            type: String,
+          },
+          }],
         category : 
         {
             type : String ,

@@ -32,29 +32,29 @@ export default function Review() {
             });
         }, []);
         const handleUpdate = async (e) => {
-            e.preventDefault();
-            try {
-              await axios.put(`http://localhost:4000/api/reviews/${ID._id}`, {
-                comments: formValues.comments ? formValues.comments : ID.comments,
-                rate: formValues.rate ? formValues.rate : ID.rate, // fix camelCase
-              });
-              console.log(`Updated successfully.`);
-              setUpdateisDone(true); // fix camelCase
-              window.location.reload();
-            } catch (error) {
-              console.error(`Error updating review: ${error}`); // fix spacing and capitalization
-            }
-          };
-          const handleDelete = async (item) => {
-            console.log(item);
-            try {
-                await axios.delete(`http://localhost:4000/api/reviews/`, { data: { id: item._id } });
-                console.log(`Review with ID ${item._id} deleted successfully.`);
-                setisDone(true)
-            } catch (error) {
-                console.error(`Error deleting Review with ID ${item._id}: ${error}`);
-            }
+          e.preventDefault();
+     
+          try {
+            await axios.put(`http://localhost:4000/api/reviews/${ID._id}`, {
+              comments: formValues.comments ? formValues.comments : ID.comments,
+              rate: formValues.rate ? formValues.rate : ID.rate, // fix camelCase
+            });
+            console.log(`Updated successfully.`);
+            setUpdateisDone(true); // fix camelCase
+            window.location.reload();
+          } catch (error) {
+            console.error(`Error updating review: ${error}`); // fix spacing and capitalization
+          }
+        };
+        const handleDelete = async (item) => {
+          console.log(item);
+          try {
+            await axios.delete(`http://localhost:4000/api/reviews/${item._id}`);
+            console.log(`Review with ID ${item._id} deleted successfully.`);
             window.location.reload()
+          } catch (error) {
+            console.error(`Error deleting review with ID ${item._id}: ${error}`);
+          }
         };
           
   
