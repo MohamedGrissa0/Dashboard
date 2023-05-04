@@ -5,9 +5,10 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function Places() {
   
   const [data, setData] = useState([])
-  
+  const [resvalue, setResults] = useState({})
   const [isClick, setisClick] = useState(false);
   const [id, setid] = useState({});
+  const [query, setquery] = useState()
   const [formValues, setFormValues] = useState({
     title:       '',
     location:    '',
@@ -23,7 +24,14 @@ console.log(formValues)
     setFormValues({ ...formValues, [name]: value });
   };
   
-  
+  const handleSubmit2 = (e) => {
+    e.preventDefault();
+    const filteredData = data.filter((post) =>
+      post.title.toLowerCase().includes(query.toLowerCase())
+    );
+    console.log(filteredData)
+    setResults(filteredData);
+  };
   
   const handleImageUpload = (event) => {
       
@@ -80,15 +88,19 @@ console.log(formValues)
     <label for="table-search" class="sr-only">Search</label>
     <div class="relative mt-1">
       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd"
-            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-            clip-rule="evenodd"></path>
-        </svg>
+       
       </div>
-      <input type="text" id="table-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items"/>
-      </div>
+      <form onSubmit={handleSubmit2}>
+      <input
+  type="text"
+  placeholder="Search..."
+  value={query}
+  onChange={(e) => setquery(e.target.value)}
+  className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+/>
+
+      <button className='mx-2' type="submit">Search</button>
+    </form>       </div>
     </div>
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -123,8 +135,43 @@ console.log(formValues)
         </tr>
       </thead>
       <tbody>
-        {
-          data.reverse().map(d=>(
+        
+           {resvalue.length > 0 ?
+            resvalue.map((d) => (<tr
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+             
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+       
+      <span className=' flex justify-center '>{d.title}</span>
+              </th>
+              <td class="px-6 py-4">
+              <span className=' flex justify-center '><a className='text-blue-600 font-semibold' target='_blank' href={d.location}>View Location</a></span>   
+             
+              </td>
+              <td class="px-6 py-4">
+                
+              <span className=' flex justify-center '>{d.category}</span>   
+              </td>
+              <td class="px-6 py-4">
+                
+              <span className=' flex justify-center '>{d.REVIEWS.length}</span>   
+              </td>
+              <td class="px-6 py-4 text-right">
+              <a href={"/reviews/"+d._id} class="font-medium flex justify-center  text-blue-600 dark:text-blue-500 hover:underline">View</a>
+            
+                  </td>
+              <td class="px-6 py-4 items-center">
+             
+                <button onClick={()=>{setisClick(!isClick);setid(d);setFormValues(d)}} class="font-medium text-blue-600 dark:text-blue-500 ">Edit</button>
+              </td>
+              <td class="px-6 py-4  text-right">
+             
+             <a href={"/place/delete/"+d._id} class="font-medium flex justify-center text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+           </td>
+            </tr>
+          
+            ))
+          :data.reverse().map(d=>(
             <tr
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
            

@@ -4,22 +4,18 @@ const Post = require("../Models/Post");
 
 
 
-router.get("/:id" , async (req,res) => {
-    const id=req.params.id
-    
-    try {
-       
-             
-       const review=await Post.find()
-     res.status(200).send(review)
-   
+router.get("/:id", async (req, res) => {
+  const id =(req.params.id);
 
-   }
-
-   catch (err) {
-       res.status(500).json(err)
-   }
-} )
+  try {
+    const post = await Post.findOne({ _id: id });
+    const reviews = post.REVIEWS;
+    console.log(reviews);
+    res.status(200).send(reviews);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.post('/:postId', async (req, res) => {
   console.log(req.params.postId);
@@ -56,7 +52,30 @@ router.post('/:postId', async (req, res) => {
 });
 
 
-//INSERT MANY 
+//search 
+router.get("/search", async (req, res) => {
+  try {
+    const q = req.query.q.toLowerCase();
+    const searchres = await Post.find({
+      $or: [
+        { "REVIEWS.comments": { $regex: `.*${q}.*`, $options: "i" } },
+        { "REVIEWS.username": { $regex: `.*${q}.*`, $options: "i" } },
+      ]
+    });
+    
+    
+    if (searchres.length > 0) {
+      res.status(200).send(searchres);
+    } else {
+      res.status(404).send({ message: "No reviews found with that query" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
+
 
 
 //UPDATE REVIEW

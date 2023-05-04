@@ -12,6 +12,9 @@ export default function Review() {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
       };
+      const [query, setquery] = useState()
+      const [resvalue, setResults] = useState({})
+
         const [isclicked, setisclicked] = useState(false)
         const [isDone , setisDone] = useState(false)
         const [isUpdateDone , setUpdateisDone] = useState(false)
@@ -31,6 +34,15 @@ export default function Review() {
               console.log(error);
             });
         }, []);
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          const filteredData = reviews.filter((review) =>
+          review.comments.toLowerCase().includes(query.toLowerCase())
+          );
+          console.log(filteredData)
+          setResults(filteredData);
+        };
+        
         const handleUpdate = async (e) => {
           e.preventDefault();
      
@@ -81,15 +93,18 @@ export default function Review() {
     <label for="table-search" class="sr-only">Search</label>
     <div class="relative mt-1">
       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-        <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd"
-            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-            clip-rule="evenodd"></path>
-        </svg>
+        
       </div>
-      <input type="text" id="table-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items"/>
-      </div>
+      <form onSubmit={handleSubmit}>
+  <input
+  type="text"
+  placeholder="Search..."
+  value={query}
+  onChange={(e) => setquery(e.target.value)}
+  className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+/>
+      <button type="submit">Search</button>
+    </form>      </div>
     </div>
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
@@ -122,8 +137,51 @@ export default function Review() {
         </tr>
       </thead>
       <tbody>
-        {
-          reviews.reverse().map((item)=>(
+      {resvalue.length > 0 ?
+            resvalue.map((item) => ( <tr key={item._id}
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            
+            <td class="px-6 py-4">
+                
+                <span className=' flex justify-center'                   style={{ wordWrap: "break-word" }}
+    >{item.personId}</span>   
+                </td>
+              <td class="px-6 py-4">
+                
+                <span className=' flex justify-center'                   style={{ wordWrap: "break-word" }}
+    >{item.username}</span>   
+                </td>
+              <td class="px-6 py-4">
+                
+              <span className=' flex justify-center'                   style={{ wordWrap: "break-word" }}
+  >{item.comments}</span>   
+              </td>
+              <td class="px-6 py-4">
+                
+                <span className=' flex justify-center'                   style={{ wordWrap: "break-word" }}
+    >{item.rate}</span>   
+                </td>
+              
+              
+              <td class="px-6 py-4    self-center flex justify-center text-right">
+             
+              <button
+                    className="update-btn flex justify-center items-center"
+                    onClick={()=>{setisclicked(!isclicked);setID(item);console.log(ID)}}
+                  >
+                    <span className="btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">
+                      Edit
+                    </span>
+                  </button>            </td>
+              <td class="px-6 py-4  text-right">
+             
+              <button className="delete-btn flex justify-center items-center">
+              <span onClick={()=>{handleDelete(item)}} className="btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">
+                      Delete
+                    </span>
+                  </button>         </td>
+            </tr>))
+          : reviews.reverse().map((item)=>(
             <tr key={item._id}
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           
