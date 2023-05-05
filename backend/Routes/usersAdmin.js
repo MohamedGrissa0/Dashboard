@@ -72,7 +72,7 @@ router.get('/:id' , async(req,res)=>
 router.get('/', async (req, res) => {
   try {
     const users = await User.find();
-    const sanitizedUsers = users.map(({ _id ,profilepic, username,email,token,password, ...others }) => ({ _id , username,email,token,password}));
+    const sanitizedUsers = users.map(({ _id ,profilePicture, username,email,token,password, ...others }) => ({ _id ,profilePicture, username,email,token,password}));
     res.status(200).json(sanitizedUsers);
   } catch (err) {
     res.status(500).json(err);
