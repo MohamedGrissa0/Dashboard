@@ -155,7 +155,7 @@ export default function Allusers() {
             <img
                     src={'http://localhost:4000/uploads/'+item.profilePicture}
                     alt="Doesnot have"
-                    className="profile-pic rounded-full w-12 h-12 md:w-16 md:h-16 block md:flex items-center justify-center"
+                    className="profile-pic object-cover  rounded-full w-12 h-12 md:w-16 md:h-16 block md:flex items-center justify-center"
                   />            </th>
             <td class="px-6 py-4">
               

@@ -1,8 +1,8 @@
-import React from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 
-import { useState } from 'react'
 import {Link} from "react-router-dom"
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import { AuthContext } from "../../Components/AuthContext/AuthContext";
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import RateReviewIcon from '@mui/icons-material/RateReview';
@@ -10,8 +10,12 @@ import ApartmentIcon from '@mui/icons-material/Apartment';
 import GroupIcon from '@mui/icons-material/Group';export default function Navbar() {
     const [toggleMenu,setToggleMenu]=useState(false)
     const [toggleSetting,setToggleSetting]=useState(false)
+     const {user}=useContext(AuthContext); 
+
+
   return (
     <div>
+     {user? <div>
       <nav class="fixed  top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
@@ -36,11 +40,11 @@ import GroupIcon from '@mui/icons-material/Group';export default function Navbar
             <div class={toggleSetting?"z-50 bg-white absolute top-4 right-0  my-4 text-base list-none    rounded-2xl shadow-2xl ":"hidden"} id="dropdown-user">
               <div class="px-4 py-3" role="none">
                 <p class="text-sm text-gray-900 dark:text-white" role="none">
-                  Neil Sims
+                  {user.username?user.username:""}
                 </p>
                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                  neil.sims@flowbite.com
-                </p>
+                {user.email?user.email:""}
+             </p>
               </div>
               <ul class="py-1" role="none">
                 <li>
@@ -104,6 +108,6 @@ import GroupIcon from '@mui/icons-material/Group';export default function Navbar
       </ul>
    </div>
 </aside>
-    </div>
+    </div>:<div></div>}</div>
   )
 }

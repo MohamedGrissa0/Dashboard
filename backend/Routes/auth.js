@@ -3,6 +3,10 @@ const User = require("../Models/Person");
 const md5 = require("md5");
 const jwt = require("jsonwebtoken");
 
+
+
+
+
 //REGISTER
 router.post("/register",async (req,res)=> {
   try {
