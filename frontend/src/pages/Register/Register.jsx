@@ -76,48 +76,37 @@ fetch("http://localhost:4000/api/auth/register",{
 <div className={loading&&" w-16 absolute top-[50%] left-[50%] h-16 border-4 border-dashed rounded-full border-orangew animate-spin dark:border-orangew"}></div>
 
 
-<div class=" sm:shadow-none lg:shadow-2xl    container lg:w-[700px]  md:w-[700px] lg:m-0 md:m-0 mt-28 md:h-[9OOpx]   md:grid       ">
- 
-  <div  class="  lg:h-max md:h-max sm:h-full  py-5 lg:w-full  p-3   container flex flex-column justify-center align-center   " >
-   
-    <div>
-        <form onSubmit={handleSubmit}>  <h4 class="h1 text-3xl text-center"> Sign up </h4>
-        <div class="flex my-[20px] flex-col ">
-    
-    <label className=" font-semibold" for="">Username</label>
-    <input class="flex justify-center items-center mt-2 text-center self-center rounded-2xl p-1 bg-gray-100 focus:outline-0 lg:w-full md:w-full w-[250px]"
-         type="text" name='username'   maxLength="20" autocomplete="false"  required  placeholder="username"
-         value={username} onChange={(e)=>{setUsername(e.target.value)}}>
-   </input>
-  </div>
-      <div class="flex my-[20px] flex-col ">
-    
-        <label className=" font-semibold" for="">Email address</label>
-        <input class="flex justify-center items-center mt-2 text-center self-center rounded-2xl p-1 bg-gray-100 focus:outline-0 lg:w-full md:w-full w-[250px]"
-         type="email" name='email' autocomplete="false"  required  placeholder="example@gmail.com"
-         value={email} onChange={(e)=>{setEmail(e.target.value)}}>
-       </input>
-      </div>
-      <div class="flex my-[20px] flex-col  ">
-        <label className=" font-semibold" for="">Password</label>
-        <input class="flex justify-center items-center mt-2 text-center self-center rounded-2xl p-1 bg-gray-100 focus:outline-0 lg:w-full md:w-full w-[250px]" 
-         type="password" name='password' required   placeholder="**********"
-         value={password} onChange={(e)=>{setPassword(e.target.value)}}>
-        </input>
-
-      </div>
-      <button className="">Register</button>
-
-      <div class="flex flex-col justify-center"> <h6  className="  mr-2" >Already have   </h6><div class="flex  justify-center"><h6 className=' mr-2'>an account?</h6><Link className="text-orangew font-bold underline" to="/login">  Login</Link></div>
-    </div>    <div class="flex justify-center">
-      </div>
-      
-       
-    </form>
-</div>
-</div>
-
-</div>
+<div class="container mx-auto max-w-lg px-4 py-8 md:p-12">
+      <form class="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <h2 class="text-2xl text-center font-bold">Sign Up</h2>
+        <div class="flex flex-col">
+          <label class="font-semibold mb-1" for="username">Username</label>
+          <input class="border-2 rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                 type="text" name="username" id="username" maxLength="20" autoComplete="false" required 
+                 placeholder="username" value={username} 
+                 onChange={(e)=>{setUsername(e.target.value)}} />
+        </div>
+        <div class="flex flex-col">
+          <label class="font-semibold mb-1" for="email">Email address</label>
+          <input class="border-2 rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                 type="email" name="email" id="email" autoComplete="false" required 
+                 placeholder="example@gmail.com" value={email} 
+                 onChange={(e)=>{setEmail(e.target.value)}} />
+        </div>
+        <div class="flex flex-col">
+          <label class="font-semibold mb-1" for="password">Password</label>
+          <input class="border-2 rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                 type="password" name="password" id="password" required 
+                 placeholder="**********" value={password} 
+                 onChange={(e)=>{setPassword(e.target.value)}} />
+        </div>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Register</button>
+        <div class="flex flex-row justify-center">
+          <h6 class="mr-2">Already have an account?</h6>
+          <Link class="text-blue-500 font-bold underline" to="/login">Login</Link>
+        </div>
+      </form>
+    </div>
 </div>
   )
 }
