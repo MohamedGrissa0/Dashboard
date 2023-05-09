@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export default function Settings() {
   const { user, dispatch } = useContext(AuthContext);
-  const [username, setUsername] = useState(user.username);
+
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState('');
 console.log(user._id)
@@ -12,15 +12,14 @@ const handleUpdateInfo = async (e) => {
     e.preventDefault();
   
     try {
-      const res = await axios.put(`http://localhost:4000/api/users/${user._id}`, {
-        username: username,
+      const res = await axios.put(`http://localhost:4000/api/admin/${user._id}`, {
+        
         email: email,
         password: password,
       });
   
       if (res.status === 200) {
-        const token = res.data.token;
-        localStorage.setItem('access_token', token);
+      
         dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
   
         alert('updated');
@@ -42,21 +41,7 @@ const handleUpdateInfo = async (e) => {
 
         <form onSubmit={handleUpdateInfo}>
           <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-            <div>
-              <label
-                className="text-gray-700 dark:text-gray-200"
-                htmlFor="username"
-              >
-                Username
-              </label>
-              <input
-                id="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-              />
-            </div>
+            
 
             <div>
               <label
@@ -90,21 +75,7 @@ const handleUpdateInfo = async (e) => {
               />
             </div>
 
-            <div>
-              <label
-                className="text-gray-700 dark:text-gray-200"
-                htmlFor="passwordConfirmation"
-              >
-                Password Confirmation
-              </label>
-              <input
-                id="passwordConfirmation"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-              />
-            </div>
+           
 
         </div>
 

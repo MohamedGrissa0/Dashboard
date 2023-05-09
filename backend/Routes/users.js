@@ -1,19 +1,12 @@
 const router = require("express").Router()
 const User = require("../Models/Person");
 const md5 =require("md5");
-const { json } = require("express");
 const Post=require("../Models/Post")
-const multer = require("multer");
-
-
-
-
 
 
   
-  
 
-//UPDATE 
+
 
 router.put('/:id', async (req, res) => {
   console.log(req.params.id);
@@ -24,12 +17,12 @@ router.put('/:id', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // Update user information based on the request body
+  
     user.username = req.body.username;
     user.email = req.body.email;
     user.password = await md5(req.body.password);;
 
-    // Save the updated user information
+  
     const updatedUser = await user.save();
 
     res.status(200).send(updatedUser);
@@ -45,7 +38,7 @@ router.put('/:id', async (req, res) => {
 
 
 
-//Delete User
+
 router.delete('/delete/:id', async (req, res) => {
     try {
       console.log(req.params.id)
@@ -71,11 +64,20 @@ router.delete('/delete/:id', async (req, res) => {
     }
   });
   
+  
+router.get('/', async (req, res) => {
+  try {
+    const users = await User.find();
+    const sanitizedUsers = users.map(({ _id ,profilePicture, username,email,password }) => ({ _id ,profilePicture, username,email,password}));
+    res.status(200).json(sanitizedUsers);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 
 
 
-//GET USER 
 
 
 router.get('/:id' , async(req,res)=>

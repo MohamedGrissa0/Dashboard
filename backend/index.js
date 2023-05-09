@@ -8,6 +8,7 @@ const authroute = require("./Routes/auth")
 const usersroute = require("./Routes/users")
 const reviewroute = require("./Routes/Review")
 const postsroute = require("./Routes/posts")
+const usersadmin = require("./Routes/usersAdmin")
 const bodyParser=require("body-parser");
 
 
@@ -24,7 +25,7 @@ app.use("/api/users" ,usersroute)
 app.use("/api/reviews" ,reviewroute)
 app.use("/api" ,postsroute)
 
-
+app.use("/api/admin" ,usersadmin)
 
 
 app.get('/', async function(req,res)

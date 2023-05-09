@@ -7,7 +7,7 @@ export default function Register() {
     const [alertt,setalert]=useState(false);
     const [loading,setloading]=useState(false);
     const [alertfalse,setalertfalse]=useState(false);
-    const[username,setUsername]=useState("");
+
     const[email,setEmail]=useState("");
     const[password,setPassword]=useState("");
   
@@ -26,7 +26,7 @@ fetch("http://localhost:4000/api/auth/register",{
         "Access-Control-Allow-Origin":"*",
     
     },body:JSON.stringify({	
-        username,
+     
         email,
         password,
     }),
@@ -79,13 +79,7 @@ fetch("http://localhost:4000/api/auth/register",{
 <div class="container mx-auto max-w-lg px-4 py-8 md:p-12">
       <form class="flex flex-col gap-4" onSubmit={handleSubmit}>
         <h2 class="text-2xl text-center font-bold">Sign Up</h2>
-        <div class="flex flex-col">
-          <label class="font-semibold mb-1" for="username">Username</label>
-          <input class="border-2 rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-                 type="text" name="username" id="username" maxLength="20" autoComplete="false" required 
-                 placeholder="username" value={username} 
-                 onChange={(e)=>{setUsername(e.target.value)}} />
-        </div>
+        
         <div class="flex flex-col">
           <label class="font-semibold mb-1" for="email">Email address</label>
           <input class="border-2 rounded-lg py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 

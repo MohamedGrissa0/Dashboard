@@ -39,11 +39,9 @@ import GroupIcon from '@mui/icons-material/Group';export default function Navbar
             </div>
             <div class={toggleSetting?"z-50 bg-white absolute top-4 right-0  my-4 text-base list-none    rounded-2xl shadow-2xl ":"hidden"} id="dropdown-user">
               <div class="px-4 py-3" role="none">
-                <p class="text-sm text-gray-900 dark:text-white" role="none">
-                  {user.username?user.username:""}
-                </p>
+                
                 <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                {user.email?user.email:""}
+                Logged in with : <br></br>{user.email?user.email:""}
              </p>
               </div>
               <ul class="py-1" role="none">
