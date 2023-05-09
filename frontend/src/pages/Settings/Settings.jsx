@@ -1,33 +1,111 @@
-import React from 'react'
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../../Components/AuthContext/AuthContext';
+import axios from 'axios';
 
 export default function Settings() {
+  const { user, dispatch } = useContext(AuthContext);
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
+  const [password, setPassword] = useState('');
+console.log(user._id)
+const handleUpdateInfo = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const res = await axios.put(`http://localhost:4000/api/users/${user._id}`, {
+        username: username,
+        email: email,
+        password: password,
+      });
+  
+      if (res.status === 200) {
+        const token = res.data.token;
+        localStorage.setItem('access_token', token);
+        dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
+  
+        alert('updated');
+      } else {
+        alert('failed');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+
   return (
     <div>
-      
- <section class="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800 mt-20">
-    <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">Account settings</h2>
-    
-    <form>
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+      <section className="max-w-4xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800 mt-20">
+        <h2 className="text-lg font-semibold text-gray-700 capitalize dark:text-white">
+          Account settings
+        </h2>
+
+        <form onSubmit={handleUpdateInfo}>
+          <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
-                <label class="text-gray-700 dark:text-gray-200" for="username">Username</label>
-                <input id="username" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor="username"
+              >
+                Username
+              </label>
+              <input
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+              />
             </div>
 
             <div>
-                <label class="text-gray-700 dark:text-gray-200" for="emailAddress">Email Address</label>
-                <input id="emailAddress" type="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor="emailAddress"
+              >
+                Email Address
+              </label>
+              <input
+                id="emailAddress"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+              />
             </div>
 
             <div>
-                <label class="text-gray-700 dark:text-gray-200" for="password">Password</label>
-                <input id="password" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor="password"
+              >
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+              />
             </div>
 
             <div>
-                <label class="text-gray-700 dark:text-gray-200" for="passwordConfirmation">Password Confirmation</label>
-                <input id="passwordConfirmation" type="password" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                htmlFor="passwordConfirmation"
+              >
+                Password Confirmation
+              </label>
+              <input
+                id="passwordConfirmation"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+              />
             </div>
+
         </div>
 
         <div class="flex justify-end mt-6">

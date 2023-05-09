@@ -39,7 +39,10 @@ const PersonSchema = new mongoose.Schema(
         {
             type: String,
         },
-       
+        age : {
+        type:String
+        }
+       ,
         token:
         {
             type: String,

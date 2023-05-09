@@ -76,13 +76,8 @@ fetch("http://localhost:4000/api/auth/register",{
 <div className={loading&&" w-16 absolute top-[50%] left-[50%] h-16 border-4 border-dashed rounded-full border-orangew animate-spin dark:border-orangew"}></div>
 
 
-<div class=" sm:shadow-none lg:shadow-2xl    container lg:w-[700px]  md:w-[700px] lg:m-0 md:m-0 mt-28 md:h-[9OOpx]   md:grid md:grid-cols-2      ">
-  <div class= " text-red-500   bg-cover bg-center md:bg-[url('https://images.pexels.com/photos/2563700/pexels-photo-2563700.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')] sm:none   flex flex-column justify-center align-center">
-    
-
-
-
-  </div>
+<div class=" sm:shadow-none lg:shadow-2xl    container lg:w-[700px]  md:w-[700px] lg:m-0 md:m-0 mt-28 md:h-[9OOpx]   md:grid       ">
+ 
   <div  class="  lg:h-max md:h-max sm:h-full  py-5 lg:w-full  p-3   container flex flex-column justify-center align-center   " >
    
     <div>
