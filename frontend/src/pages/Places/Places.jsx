@@ -49,10 +49,25 @@ console.log(formValues)
     }).catch(e=>{
       console.log(e)
     })
+
+  
     
     
   }, [])
   console.log(formValues)
+
+  const handledelete = async (d) => {
+    try {
+      await axios.delete(`http://localhost:4000/api/${d._id}`);
+      alert("Success");
+    } catch (error) {
+      console.error(error);
+      alert("Failed");
+    }
+    window.location.reload();
+  };
+  
+  
   
   const handleSubmit = async (e)=>{
     e.preventDefault();
@@ -166,7 +181,7 @@ console.log(formValues)
               </td>
               <td class="px-6 py-4  text-right">
              
-             <a href={"/place/delete/"+d._id} class="font-medium flex justify-center text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+              <button onClick={()=>{setid(d._id) ; handledelete(d)}} class="font-medium text-blue-600 dark:text-blue-500 ">Delete</button>
            </td>
             </tr>
           
@@ -195,13 +210,13 @@ console.log(formValues)
             <a href={"/reviews/"+d._id} class="font-medium flex justify-center  text-blue-600 dark:text-blue-500 hover:underline">View</a>
           
                 </td>
-            <td class="px-6 py-4 items-center">
+            <td class="px-6 py-4 text-center">
            
               <button onClick={()=>{setisClick(!isClick);setid(d);setFormValues(d)}} class="font-medium text-blue-600 dark:text-blue-500 ">Edit</button>
             </td>
-            <td class="px-6 py-4  text-right">
+            <td class="px-6 py-4  text-center ">
            
-           <a href={"/place/delete/"+d._id} class="font-medium flex justify-center text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+            <button onClick={()=>{setid(d) ; handledelete(d)}} class="font-medium text-blue-600 dark:text-blue-500 ">Delete</button>
          </td>
           </tr>
         

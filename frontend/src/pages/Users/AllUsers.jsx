@@ -38,15 +38,15 @@ export default function Allusers() {
         console.log(error);
       });
   }, []);
-  const handleDelete = async (e) => {
-    console.log(IDDelete);
+  const handleDelete = async (item) => {
+    console.log(item);
 
     try {
-      await axios.delete(`http://localhost:4000/api/users/${IDDelete._id}`);
-      console.log(`User with ID ${IDDelete._id} deleted successfully.`);
+      await axios.delete(`http://localhost:4000/api/users/${item._id}`);
+      console.log(`User with ID ${item._id} deleted successfully.`);
       setisDone(true)
     } catch (error) {
-      console.error(`Error deleting user with ID ${IDDelete._id}: ${error}`);
+      console.error(`Error deleting user with ID ${item._id}: ${error}`);
     }
     window.location.reload()
   };
@@ -65,6 +65,7 @@ export default function Allusers() {
     } catch (error) {
       console.error(`Error updating user: ${error}`);
     }
+    window.location.reload()
 
   }
 
@@ -191,7 +192,7 @@ return (
                   <td class="px-6 py-4  text-right">
 
                     <button className="delete-btn  lg:ml-14 flex justify-center items-center">
-                      <span onClick={() => {setIDDelete(item); handleDelete() }} className="btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">
+                      <span onClick={() => {setIDDelete(item); handleDelete(item) }} className="btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">
                         Delete
                       </span>
                     </button>         </td>
