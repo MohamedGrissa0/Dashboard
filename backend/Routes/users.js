@@ -16,13 +16,13 @@ router.put('/:id', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
   
-    user.username = req.body.username;
-    user.email = req.body.email;
-    user.password = await md5(req.body.password);;
+    user.username = req.body.username || user.username;
+    user.email = req.body.email || user.email;
+    if (req.body.password) {
+      user.password = await md5(req.body.password);
+    }
 
-  
     const updatedUser = await user.save();
 
     res.status(200).send(updatedUser);
@@ -39,7 +39,8 @@ router.put('/:id', async (req, res) => {
 
 
 
-router.delete('/delete/:id', async (req, res) => {
+
+router.delete('/:id', async (req, res) => {
     try {
       console.log(req.params.id)
       const user = await User.findById(req.params.id);
