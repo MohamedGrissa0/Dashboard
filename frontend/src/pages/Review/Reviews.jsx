@@ -37,7 +37,7 @@ export default function Review() {
         const handleSubmit = (e) => {
           e.preventDefault();
           const filteredData = reviews.filter((review) =>
-          review.comments.toLowerCase().includes(query.toLowerCase())
+          review.comments.toLowerCase().includes(query.toLowerCase()) ||  review.username.toLowerCase().includes(query.toLowerCase())
           );
           console.log(filteredData)
           setResults(filteredData);
