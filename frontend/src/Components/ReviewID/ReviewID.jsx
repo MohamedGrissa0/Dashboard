@@ -62,13 +62,13 @@ console.log(data) ;     console.log(ID)
         try {
           await axios.put(`http://localhost:4000/api/reviews/${ID._id}`, {
             comments: formValues.comments ? formValues.comments : ID.comments,
-            rate: formValues.rate ? formValues.rate : ID.rate, // fix camelCase
+            rate: formValues.rate ? formValues.rate : ID.rate, 
           });
           console.log(`Updated successfully.`);
-          setUpdateisDone(true); // fix camelCase
+          setUpdateisDone(true); 
           window.location.reload();
         } catch (error) {
-          console.error(`Error updating review: ${error}`); // fix spacing and capitalization
+          console.error(`Error updating review: ${error}`); 
         }
       };
 
@@ -213,7 +213,7 @@ return (
                 Edit
               </span>
             </button>            </td>
-        <td class="px-6 py-4  text-right self-center  text-center ">
+        <td class="px-6 py-4  text-right self-center  text-center text-right ">
        
         <button className="delete-btn flex justify-center items-center">
         <span onClick={() => { handleDelete(item); console.log(item); }} className="btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">

@@ -27,8 +27,7 @@ export default function Review() {
           .get(`http://localhost:4000/api/reviews/`)
           .then((response) => {
                 setReviews(response.data);
-              console.log(response.data) // Update the users array with the response data from the Axios request
-              // Use the "users" variable in maps or any other operations
+              console.log(response.data) 
             })
             .catch((error) => {
               console.log(error);
@@ -49,13 +48,13 @@ export default function Review() {
           try {
             await axios.put(`http://localhost:4000/api/reviews/${ID._id}`, {
               comments: formValues.comments ? formValues.comments : ID.comments,
-              rate: formValues.rate ? formValues.rate : ID.rate, // fix camelCase
+              rate: formValues.rate ? formValues.rate : ID.rate, 
             });
             console.log(`Updated successfully.`);
-            setUpdateisDone(true); // fix camelCase
+            setUpdateisDone(true); 
             window.location.reload();
           } catch (error) {
-            console.error(`Error updating review: ${error}`); // fix spacing and capitalization
+            console.error(`Error updating review: ${error}`); 
           }
         };
         const handleDelete = async (item) => {

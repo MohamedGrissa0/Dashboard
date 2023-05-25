@@ -2,7 +2,6 @@ import {React,useEffect} from 'react'
 import {createContext,useReducer    }from 'react'
 
 const INITIAL_STATE={
-        /// to check if there is already user logged-in in localstorage  
 user:JSON.parse(localStorage.getItem("user")) ||  null,
 loading:false,
 error:null
