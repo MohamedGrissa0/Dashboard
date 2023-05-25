@@ -77,7 +77,6 @@ router.get("/search", async (req, res) => {
 
 
 
-//UPDATE REVIEW
 
 router.put('/:id', async (req, res) => {
   try {
@@ -106,7 +105,6 @@ router.put('/:id', async (req, res) => {
 
 
 
-//GET ALL Reviews
 router.get('/', async (req, res) => {
   try {
     const posts = await Post.find({});
@@ -123,7 +121,6 @@ router.get('/', async (req, res) => {
 
   
 
-//Delete Review
 
 router.delete('/:id', async (req, res ) => {
   console.log(req.params.id)

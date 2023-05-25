@@ -28,17 +28,23 @@ export default function ReviewID() {
   
   
 
-    useEffect(async() => {
-      await  axios.get("http://localhost:4000/api/reviews/"+id).then(res=>{
-            setData(res.data)
-            console.log(res.data)
-            setloading(false)
-          }).catch(e=>{
-            setloading(true)
-            setData(resvalue)
-            console.log(e)
-          })
-    }, [])  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/api/reviews/" + id);
+        setData(response.data);
+        console.log(response.data);
+        setloading(false);
+      } catch (error) {
+        setloading(true);
+        setData(resvalue);
+        console.log(error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
     const [isclicked, setisclicked] = useState(false)
     const [isDone , setisDone] = useState(false)
     const [isUpdateDone , setUpdateisDone] = useState(false)
@@ -207,7 +213,7 @@ return (
                 Edit
               </span>
             </button>            </td>
-        <td class="px-6 py-4  text-right">
+        <td class="px-6 py-4  text-right self-center  text-center ">
        
         <button className="delete-btn flex justify-center items-center">
         <span onClick={() => { handleDelete(item); console.log(item); }} className="btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">
