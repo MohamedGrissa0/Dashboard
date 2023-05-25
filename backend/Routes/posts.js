@@ -35,21 +35,7 @@ router.get("/toprated/:id", async (req, res) => {
 });
 
 
-// SEARCH BY PLACE NAME
-router.get("/search" , async (req,res) => {
-    try {
-        const q = req.query.q
-        const searchres = Post.find({title: "grissa"})
-        res.status(200).send({title : "grissa" , description : "fnnfzkfbezfbezbfezbfibezfezbfbzefbzefuibezfbuezbfiezbfubezfbiazbfzbe" , images:"https://images.pexels.com/photos/12509875/pexels-photo-12509875.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" , review: 50 , reviewNB : 4.5 })
-  console.log({title : "grissa" , 
-  description : "fnnfzkfbezfbezbfezbfibezfezbfbzefbzefuibezfbuezbfiezbfubezfbiazbfzbe" ,
-   images:["https://images.pexels.com/photos/12509875/pexels-photo-12509875.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load","https://images.pexels.com/photos/12509875/pexels-photo-12509875.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load","https://images.pexels.com/photos/12509875/pexels-photo-12509875.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"] , review: 50 , reviewNB : 4.5 })
-    }
 
-    catch (err) {
-        res.status(500).json(err)
-    }
-} )
 
 router.patch('/:postId', async (req, res) => {
   console.log(req.params.postId);

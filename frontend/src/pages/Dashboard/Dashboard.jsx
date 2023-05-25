@@ -25,8 +25,6 @@ export default function Dashboard() {
         axios.get(`http://localhost:4000/api/users/`).then((response) => {
             setUsers(response.data.length);
             setallUsers(response.data)
-            // console.log(response.data) // Update the users array with the response data from the Axios request
-            // Use the "users" variable in maps or any other operations
         }).catch((error) => {
             console.log(error);
         });
@@ -37,8 +35,7 @@ export default function Dashboard() {
             setallPosts(response.data)
 
 
-            // Update the users array with the response data from the Axios request
-            // Use the "users" variable in maps or any other operations
+      
         }).catch((error) => {
             console.log(error);
         });
@@ -246,21 +243,7 @@ export default function Dashboard() {
                     </div>
 
 
-                    <div class="grid grid-cols-2 gap-4 mt-[15px]">
-                        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                            <p class="text-2xl text-gray-400 dark:text-gray-500">
-+                            </p>
-                        </div>
-                        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                        </div>
-                        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                        </div>
-                        <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                            <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>

@@ -1,5 +1,4 @@
 const router = require("express").Router()
-const Person = require("../Models/Person");
 const Post = require("../Models/Post");
 
 

@@ -7,7 +7,6 @@ const Admins=require("../Models/Admins")
 
 
 
-//REGISTER
 router.post("/register",async (req,res)=> {
   try {
     
@@ -34,7 +33,6 @@ router.post("/register",async (req,res)=> {
   
   });
 
-//LOGIN
 router.post("/login",async (req,res)=>{
 
   try{
