@@ -27,8 +27,6 @@ export default function Login({ location }) {
           console.log(res.status)
            if(res.status===200){
             setalert(true);
-             const token = res.data.token;
-             localStorage.setItem('access_token', token);
              localStorage.setItem('user', JSON.stringify(res.data));
               setTimeout(() => {
                 dispatch({ type: "LOGIN_SUCCESS", payload: res.data , loading:true });   
@@ -87,6 +85,9 @@ export default function Login({ location }) {
              onChange={(e)=>{setPassword(e.target.value)}} />
     </div>
     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Login</button>
+    <div class="flex flex-row justify-center">
+      <Link class="text-blue-500 font-bold underline" to="">Forgot Password?</Link>
+    </div>
     <div class="flex flex-row justify-center">
       <Link class="text-blue-500 font-bold underline" to="/register">Sign Up</Link>
     </div>

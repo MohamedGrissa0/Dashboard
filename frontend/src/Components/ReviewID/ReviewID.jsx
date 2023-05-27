@@ -139,10 +139,6 @@ return (
        <span class=" flex justify-center">Rate</span>  
        </th>
       
-
-      <th scope="col" class="px-6 py-3">
-        <span class=" flex justify-center">Edit</span>
-      </th>
       <th scope="col" class="px-6 py-3">
         <span class=" flex justify-center">Delete</span>
       </th>
@@ -202,17 +198,7 @@ return (
 >{item.rate}</span>   
           </td>
         
-        
-        <td class="px-6 py-4    self-center flex justify-center text-right">
        
-        <button
-              className="update-btn flex justify-center items-center"
-              onClick={()=>{setisclicked(!isclicked);setID(item);console.log(ID)}}
-            >
-              <span className="btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">
-                Edit
-              </span>
-            </button>            </td>
         <td class="px-6 py-4  text-right self-center  text-center text-right ">
        
         <button className="delete-btn flex justify-center items-center">
