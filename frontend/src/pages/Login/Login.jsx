@@ -47,7 +47,7 @@ export default function Login({ location }) {
     }
   return (
   
-<div class={loading?"container opacity-70  relative flex  justify-center items-center   box-border p-0 text-center overflow-x-hidden	h-[100vh]":"container   relative flex  justify-center items-center   box-border p-0 text-center overflow-x-hidden	h-[100vh]"} >
+<div class={loading?"container opacity-70   flex  justify-center items-center   box-border p-0 text-center overflow-x-hidden	":"container    flex  justify-center items-center   box-border p-0 text-center overflow-x-hidden	"} >
 <div className={alertt ? "alert fixed top-1/4 z-50 mx-auto px-4 py-2 bg-green-200 text-green-700 rounded-md shadow-lg transition duration-500 flex justify-between ease-in-out transform translate-x-1/2 md:max-w-md md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 lg:max-w-lg lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2" : "hidden"}>
   <div className="flex items-center p-[20px] ">
     <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current h-6 w-6 mr-2" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>

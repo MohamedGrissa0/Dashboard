@@ -116,7 +116,7 @@ return (
   placeholder="Search..."
   value={query}
   onChange={(e) => setquery(e.target.value)}
-  className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+  className=" mx-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 />
       <button type="submit">Search</button>
     </form> </div>
@@ -199,10 +199,10 @@ return (
           </td>
         
        
-        <td class="px-6 py-4  text-right self-center  text-center text-right ">
+        <td class="px-6 py-4  text-right self-center flex justify-center items-center  text-center text-right ">
        
         <button className="delete-btn flex justify-center items-center">
-        <span onClick={() => { handleDelete(item); console.log(item); }} className="btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">
+        <span onClick={() => { handleDelete(item); console.log(item); }} className=" flex justify-center items-center btn-text bg-blue-500 text-white px-4 py-2 rounded-full md:px-6 md:py-3 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent">
   Delete
 </span>
 
