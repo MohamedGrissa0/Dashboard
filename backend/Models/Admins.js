@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const PersonSchema = new mongoose.Schema(
+const AdminSchema = new mongoose.Schema(
     {
     
         email:
@@ -16,4 +16,4 @@ const PersonSchema = new mongoose.Schema(
 )
 
 
-module.exports = mongoose.model("Admins", PersonSchema);
+module.exports = mongoose.model("Admins", AdminSchema);
